@@ -10,7 +10,7 @@ var APACHE_LICENSE_2_0 = map[string]string{
 	"name": "Apache License Version 2.0",
 	"link": "https://opensource.org/licenses/Apache-2.0",
 	"text":
-`								Apache License
+`                                Apache License
                            Version 2.0, January 2004
                         http://www.apache.org/licenses/
 
