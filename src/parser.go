@@ -98,8 +98,14 @@ func transform(fileContent []byte, cfg Config) ([]byte, error) {
 	if err != nil {
 		return []byte{}, err
 	}
-	return append(
-		[]byte(fmt.Sprintf(static.LICENSE_NOTICE_TEMPLATE, cfg.Year, cfg.Author, l["name"], l["link"])),
-		fileContent...
-	), nil
+	var licenseNotice []byte
+	if cfg.CustomLicenseNotice != "" {
+		licenseNotice, err = ioutil.ReadFile(cfg.CustomLicenseNotice)
+		if err != nil {
+			return []byte{}, err
+		}
+	} else {
+		licenseNotice = []byte(fmt.Sprintf(static.LICENSE_NOTICE_TEMPLATE, cfg.Year, cfg.Author, l["name"], l["link"]))
+	}
+	return append(licenseNotice, fileContent...), nil
 }

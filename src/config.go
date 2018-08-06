@@ -79,7 +79,7 @@ func (cfg Config) normalize() (Config, error) {
 	for i, path := range cfg.Paths {
 		if strings.HasPrefix(path, "/") {
 			if len(path) > 1 {
-				cfg.Paths = cfg.Paths[1:]
+				cfg.Paths[i] = path[1:]
 			} else {
 				cfg.Paths, err = removeItem(cfg.Paths, i)
 				if err != nil {
@@ -88,7 +88,7 @@ func (cfg Config) normalize() (Config, error) {
 			}
 		} else if strings.HasPrefix(path, "./") {
 			if len(path) > 2 {
-				cfg.Paths = cfg.Paths[2:]
+				cfg.Paths[i] = path[2:]
 			} else {
 				cfg.Paths, err = removeItem(cfg.Paths, i)
 				if err != nil {
