@@ -1,5 +1,6 @@
 ## Available Licenses
 Pull requests about improving licenses and increasing an amount of them are welcome.
+
 See [contributing](../.github/CONTRIBUTING.md) and [opening issues](../.github/ISSUE_TEMPLATE.md) for details.
 
 ### Apache
