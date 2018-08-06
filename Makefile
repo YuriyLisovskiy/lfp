@@ -5,7 +5,7 @@
 all: test target install
 
 target:
-	@bash ./build.sh
+	@bash ./build/build.sh
 
 install:
 	@bash ./install.sh

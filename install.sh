@@ -2,6 +2,6 @@
 
 #! Only linux installation available using bash
 
-echo Installing lofp...
+echo Installing lfp...
 sudo cp $PWD/bin/lfp /usr/bin/lfp
 echo Done.
