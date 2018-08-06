@@ -5,10 +5,10 @@
 all: test target
 
 target:
-	@./build.sh
+	@bash ./build.sh
 
 install:
-	@./install.sh
+	@bash ./install.sh
 
 PACKAGES = ./src
 

@@ -10,7 +10,6 @@ import (
 )
 
 func main() {
-	println("Building the binary for target platform...")
 	platform := runtime.GOOS
 	binary := "lofp"
 	switch platform {
@@ -18,6 +17,5 @@ func main() {
 		binary += ".exe"
 	default:
 	}
-	exec.Command("go", "build", "-o", "bin/" + binary, "main.go")
-	println("Done.")
+	exec.Command("go", "build", "-o", "bin/" + binary, "main.go").Run()
 }
