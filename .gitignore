@@ -19,3 +19,4 @@ coverage.html
 bin/
 *.yml
 !.travis.yml
+!sample/*
