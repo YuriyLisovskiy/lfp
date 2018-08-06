@@ -2,7 +2,7 @@
 # Distributed under the MIT software license, see the accompanying 
 # file LICENSE or https://opensource.org/licenses/MIT
 
-all: test target
+all: test target install
 
 target:
 	@bash ./build.sh
@@ -23,4 +23,4 @@ test:
 	@echo Done.
 
 clean:
-	@-rm -rf bin/
+	@rm -rf bin/ coverage.out coverage.html
