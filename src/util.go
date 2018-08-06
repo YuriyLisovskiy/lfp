@@ -9,7 +9,7 @@ import (
 	"github.com/YuriyLisovskiy/lofp/src/licenses"
 	"github.com/YuriyLisovskiy/lofp/src/licenses/bsd"
 	"github.com/YuriyLisovskiy/lofp/src/licenses/gnu"
-)
+	)
 
 func getLicense(license string) (map[string]string, error) {
 	var res map[string]string
@@ -42,4 +42,8 @@ func getLicense(license string) (map[string]string, error) {
 		return map[string]string{}, args.ErrLicenseNotFound
 	}
 	return res, nil
+}
+
+func createLicenseFile() {
+
 }

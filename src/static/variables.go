@@ -2,6 +2,11 @@
 // Distributed under the MIT software license, see the accompanying
 // file LICENSE or https://opensource.org/licenses/MIT
 
-package cli
+package static
 
-var DEBUG = true
+var LICENSE_NOTICE_TEMPLATE =
+`// Copyright (c) %d %s
+// Distributed under the %s,
+// see the accompanying file LICENSE or %s
+
+`

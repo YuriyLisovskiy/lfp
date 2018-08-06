@@ -2,10 +2,6 @@
 // Distributed under the MIT software license, see the accompanying
 // file LICENSE or https://opensource.org/licenses/MIT
 
-package main
+package src
 
-import "github.com/YuriyLisovskiy/lofp/src"
-
-func main() {
-	src.RunCLI()
-}
+var DEBUG = true
