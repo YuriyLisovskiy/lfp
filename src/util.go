@@ -17,27 +17,27 @@ import (
 func getLicense(license string) (map[string]string, error) {
 	var res map[string]string
 	switch license {
-	case "apache-v2":
+	case "apache-2.0":
 		res = licenses.APACHE_LICENSE_2_0
 	case "bsd-2-clause":
 		res = bsd.BSD_2_CLAUSE_LICENSE
 	case "bsd-3-clause":
 		res = bsd.BSD_3_CLAUSE_LICENSE
-	case "eclipse-pl-v2":
+	case "epl-2.0":
 		res = licenses.ECLIPSE_PUBLIC_LICENSE_V2_0
-	case "gnu-gpl-v2":
+	case "gpl-2.0":
 		res = gnu.GNU_GPL_V2_0
-	case "gnu-gpl-v3":
+	case "gpl-3.0":
 		res = gnu.GNU_GPL_V3_0
-	case "gnu-affero-gpl-v3":
+	case "agpl-3.0":
 		res = gnu.GNU_AFFERO_GPL_V_3
-	case "gnu-lesser-gpl-v2.1":
+	case "lgpl-2.1":
 		res = gnu.GNU_LESSER_GPL_V2_1
-	case "gnu-lesser-gpl-v3":
+	case "lgpl-3.0":
 		res = gnu.GNU_LESSER_GPL_V3
 	case "mit":
 		res = licenses.MIT_LICENSE
-	case "mozilla-pl-v2":
+	case "mpl-2.0":
 		res = licenses.MOZILLA_PUBLIC_LICENSE_V2
 	case "unlicense":
 		res = licenses.UNLICENSE
@@ -68,11 +68,11 @@ func createLicenseFile(cfg Config) error {
 	}
 	licenseContent := license["text"]
 	switch cfg.License {
-	case "apache-v2", "mit", "bsd-2-clause", "bsd-3-clause":
+	case "apache-2.0", "mit", "bsd-2-clause", "bsd-3-clause":
 		licenseContent = fmt.Sprintf(licenseContent, cfg.Year, cfg.Author)
-	case "gnu-lesser-gpl-v2.1", "gnu-gpl-v2":
+	case "lgpl-2.1", "gpl-2.0":
 		licenseContent = fmt.Sprintf(licenseContent, cfg.ProgramName, cfg.Year, cfg.Author, cfg.ProgramName, cfg.Year, cfg.Author)
-	case "gnu-gpl-v3", "gnu-affero-gpl-v3":
+	case "gpl-3.0", "agpl-3.0":
 		licenseContent = fmt.Sprintf(licenseContent, cfg.ProgramName, cfg.Year, cfg.Author)
 	default:
 	}

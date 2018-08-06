@@ -10,7 +10,7 @@ paths:
 - execute.go
 - main.go
 
-license: apache-v2
+license: agpl-3.0
 
 custom_license_notice: /home/root/licenses/custom/notices/license_notice_for_skynet.txt
 

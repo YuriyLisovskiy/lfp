@@ -5,7 +5,7 @@
 package licenses
 
 var ECLIPSE_PUBLIC_LICENSE_V2_0 = map[string]string{
-	"name": "Eclipse Public License - v 2.0",
+	"name": "Eclipse Public License - v2.0",
 	"link": "https://opensource.org/licenses/EPL-2.0",
 	"text":
 `Eclipse Public License - v 2.0
