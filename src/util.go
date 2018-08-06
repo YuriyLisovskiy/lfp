@@ -5,11 +5,14 @@
 package src
 
 import (
-	"github.com/YuriyLisovskiy/lofp/src/args"
+	"os"
+
 	"github.com/YuriyLisovskiy/lofp/src/licenses"
 	"github.com/YuriyLisovskiy/lofp/src/licenses/bsd"
 	"github.com/YuriyLisovskiy/lofp/src/licenses/gnu"
-	)
+	"io/ioutil"
+	"fmt"
+)
 
 func getLicense(license string) (map[string]string, error) {
 	var res map[string]string
@@ -39,11 +42,72 @@ func getLicense(license string) (map[string]string, error) {
 	case "unlicense":
 		res = licenses.UNLICENSE
 	default:
-		return map[string]string{}, args.ErrLicenseNotFound
+		return map[string]string{}, ErrLicenseNotFound
 	}
 	return res, nil
 }
 
-func createLicenseFile() {
+func createLicenseFile(cfg Config) error {
 
+	path := cfg.ProjectRoot + "/LICENSE"
+
+	// detect if file exists
+	var _, err = os.Stat(path)
+
+	// create file if not exists
+	if os.IsNotExist(err) {
+		file, err := os.Create(path)
+		if err != nil {
+			return err
+		}
+		defer file.Close()
+	}
+	license, err := getLicense(cfg.License)
+	if err != nil {
+		return err
+	}
+	licenseContent := license["text"]
+	switch cfg.License {
+	case "apache-v2", "mit", "bsd-2-clause", "bsd-3-clause":
+		licenseContent = fmt.Sprintf(licenseContent, cfg.Year, cfg.Author)
+	case "gnu-lesser-gpl-v2.1", "gnu-gpl-v2":
+		licenseContent = fmt.Sprintf(licenseContent, cfg.ProgramName, cfg.Year, cfg.Author, cfg.ProgramName, cfg.Year, cfg.Author)
+	case "gnu-gpl-v3", "gnu-affero-gpl-v3":
+		licenseContent = fmt.Sprintf(licenseContent, cfg.ProgramName, cfg.Year, cfg.Author)
+	default:
+	}
+
+	// write to file generated license
+	err = ioutil.WriteFile(path, []byte(licenseContent), 0644)
+	if err != nil {
+		return err
+	}
+	return nil
+}
+
+func pathExists(path string) (bool, error) {
+	_, err := os.Stat(path)
+	if err == nil {
+		return true, nil
+	}
+	if os.IsNotExist(err) {
+		return false, nil
+	}
+	return true, err
+}
+
+func isDir(path string) bool {
+	info, err := os.Stat(path)
+	if err != nil {
+		return false
+	}
+	return info.Mode().IsDir()
+}
+
+func isFile(path string) bool {
+	info, err := os.Stat(path)
+	if err != nil {
+		return true
+	}
+	return info.Mode().IsRegular()
 }

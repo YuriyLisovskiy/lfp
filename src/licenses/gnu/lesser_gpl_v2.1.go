@@ -5,7 +5,7 @@
 package gnu
 
 // fmt.Sprintf() requires arguments in the order:
-// <program>(string) <year>(decimal) <author>(string)
+// <program>(string) <year>(string) <author>(string)
 var GNU_LESSER_GPL_V2_1 = map[string]string{
 	"name": "GNU Lesser General Public License v2.1",
 	"link": "https://opensource.org/licenses/LGPL-2.1",
@@ -483,7 +483,7 @@ convey the exclusion of warranty; and each file should have at least the
 "copyright" line and a pointer to where the full notice is found.
 
     %s
-    Copyright (C) %d %s
+    Copyright (C) %s %s
 
     This library is free software; you can redistribute it and/or
     modify it under the terms of the GNU Lesser General Public

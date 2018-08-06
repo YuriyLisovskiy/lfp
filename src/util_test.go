@@ -7,7 +7,6 @@ package src
 import (
 	"testing"
 
-	"github.com/YuriyLisovskiy/lofp/src/args"
 	"github.com/YuriyLisovskiy/lofp/src/licenses"
 	"github.com/YuriyLisovskiy/lofp/src/licenses/bsd"
 	"github.com/YuriyLisovskiy/lofp/src/licenses/gnu"
@@ -89,12 +88,12 @@ var Test_getLicenseErrLicenseNotFoundData = struct {
 	expected error
 }{
 	"some-unknown-license",
-	args.ErrLicenseNotFound,
+	ErrLicenseNotFound,
 }
 
 func Test_getLicenseErrLicenseNotFound(test *testing.T) {
 	_, err := getLicense(Test_getLicenseErrLicenseNotFoundData.input)
-	if err != args.ErrLicenseNotFound {
+	if err != ErrLicenseNotFound {
 		test.Errorf("util.Test_getLicenseErrLicenseNotFound: actual error != expected error:\n\t%s != %s",
 			err,
 			Test_getLicenseErrLicenseNotFoundData.expected,

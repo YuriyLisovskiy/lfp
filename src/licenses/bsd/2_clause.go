@@ -5,14 +5,14 @@
 package bsd
 
 // fmt.Sprintf() requires arguments in the order:
-// <year>(decimal) <author>(string)
+// <year>(string) <author>(string)
 var BSD_2_CLAUSE_LICENSE = map[string]string{
 	"name": "BSD 2-Clause License",
 	"link": "https://opensource.org/licenses/BSD-2-Clause",
 	"text":
 `BSD 2-Clause License
 
-Copyright (c) %d, %s All rights reserved.
+Copyright (c) %s, %s All rights reserved.
 
 Redistribution and use in source and binary forms, with or without
 modification, are permitted provided that the following conditions are met:

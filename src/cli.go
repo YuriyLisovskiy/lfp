@@ -6,51 +6,66 @@ package src
 
 import (
 	"os"
-	"log"
+	"io/ioutil"
 
-	"github.com/YuriyLisovskiy/lofp/src/args"
+	"github.com/YuriyLisovskiy/lofp/src/static"
 )
 
-// logErr: if DEBUG is true, prints trace, else prints error message.
-func logErr(err error) {
-	if DEBUG {
-		log.Panic(err)
-	} else {
-		log.Println(err)
-	}
-}
+func RunCLI() error {
 
-func RunCLI() {
+	// if there are no arguments
+	if len(os.Args) == 1 {
+		print(static.ABOUT)
+		lofp.Usage()
+		return nil
+	}
 
 	// parse command line arguments
-	if err := args.Lofp.Parse(os.Args[1:]); err != nil {
-		logErr(err)
-		return
+	if err := lofp.Parse(os.Args[1:]); err != nil {
+		return nil
 	}
-
-	arguments := args.Lofp.Args()
+	arguments := lofp.Args()
 
 	// check if there is no errors in given arguments
-	if err := args.ValidateArgs(arguments); err != nil {
-		logErr(err)
-		return
+	if err := validateArgs(arguments); err != nil {
+		return err
 	}
 
-	// retrieve paths from arg set
-	paths := args.RetrievePaths(arguments)
+	if *versionPtr {
+		println(static.VERSION)
+	} else if *helpPtr {
+		lofp.Usage()
+	} else {
 
-	// check if paths contain arguments
-	if err := args.ValidatePaths(paths); err != nil {
-		logErr(err)
-		return
+		// read and parse config file
+		cfgData, err := ioutil.ReadFile(*configPtr)
+		if err != nil {
+			return err
+		}
+		cfg, err := parseConfig(cfgData)
+		if err != nil {
+			return err
+		}
+
+		// validate and normalize configuration
+		err = cfg.validate()
+		if err != nil {
+			return err
+		}
+		cfg, err = cfg.normalize()
+		if err != nil {
+			return err
+		}
+
+		// run main process
+		err = process(cfg)
+		if err != nil {
+			return err
+		}
 	}
-
-	// run main process
-	process(paths)
+	return nil
 }
 
-func process(paths []string) {
-	for _, path := range paths {
-		println(path)
-	}
+func process(cfg Config) error {
+	return processPaths(cfg)
 }

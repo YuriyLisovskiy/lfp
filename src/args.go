@@ -2,49 +2,43 @@
 // Distributed under the MIT software license, see the accompanying
 // file LICENSE or https://opensource.org/licenses/MIT
 
-package args
+package src
 
-import (
-	"flag"
-	"strings"
-)
+import "flag"
 
 var (
-	Lofp = flag.NewFlagSet("lofp", flag.ContinueOnError)
-
-	helpPtr       = Lofp.Bool("h", false, "prints usage")
-	versionPtr    = Lofp.Bool("v", false, "prints version")
+	lofp       = flag.NewFlagSet("lofp", flag.ContinueOnError)
+	helpPtr    = lofp.Bool("help", false, "prints usage")
+	configPtr  = lofp.String("config", "", "set config path")
+	versionPtr = lofp.Bool("version", false, "prints version")
 )
 
 // validateArgs checks if args is correct.
-func ValidateArgs(args []string) error {
+func validateArgs(args []string) error {
 	if *helpPtr && len(args) > 2 {
 		return ErrHelpRedundantArgs
 	}
 	if *versionPtr && len(args) > 2 {
 		return ErrVersionRedundantArgs
 	}
+	if *configPtr == "" && !*helpPtr && !*versionPtr {
+		return ErrMissingConfigPath
+	}
 	return nil
 }
 
-// isArg checks if given string is an argument.
-func isArg(arg string) bool {
-	switch strings.Replace(arg, "-", "", -1) {
-	case "p", "lf", "l", "n", "r", "h", "v":
-		return true
-	default:
-		return false
-	}
-}
-
 // validatePaths checks if given paths contain arguments.
-func ValidatePaths(paths []string) error {
+func validatePaths(paths []string) error {
 	if len(paths) == 0 {
-		return ErrPathsRequired
+		return ConfigErrPathsRequired
 	}
 	for _, path := range paths {
-		if (path) {
-			return ErrPathsContainArgs
+		exists, err := pathExists(path)
+		if err != nil {
+			return err
+		}
+		if !exists {
+			return ErrPathDoesNotExist
 		}
 	}
 	return nil

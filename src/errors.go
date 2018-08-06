@@ -2,20 +2,28 @@
 // Distributed under the MIT software license, see the accompanying
 // file LICENSE or https://opensource.org/licenses/MIT
 
-package args
+package src
 
 import (
 	"errors"
+
 	"github.com/YuriyLisovskiy/lofp/src/static"
 )
 
 var (
-	ErrPathsRequired               = errors.New(static.PROGRAM_NAME + " error: path(s) required")
-	ErrLicenseNotFound             = errors.New(static.PROGRAM_NAME + " error: license not found")
-	ErrProjectRootRequired         = errors.New(static.PROGRAM_NAME + " error: project root required")
-	ErrPathsContainArgs            = errors.New(static.PROGRAM_NAME + " error: paths contain argument(s)")
-	ErrLicenseNotSpecified         = errors.New(static.PROGRAM_NAME + " error: license was not specified")
-	ErrHelpRedundantArgs           = errors.New(static.PROGRAM_NAME + " error: help was called with redundant argument(s)")
-	ErrVersionRedundantArgs        = errors.New(static.PROGRAM_NAME + " error: version was called with redundant argument(s)")
-	ErrLicensingOptionNotSpecified = errors.New(static.PROGRAM_NAME + " error: at least one of -l or -n arguments required, type -h for details")
+	// Configuration errors
+	ConfigErrYearRequired                 = errors.New(static.PROGRAM_NAME + " error: year required")
+	ConfigErrAuthorRequired               = errors.New(static.PROGRAM_NAME + " error: author required")
+	ConfigErrPathsRequired                = errors.New(static.PROGRAM_NAME + " error: path(s) required")
+	ConfigErrLicenseRequired              = errors.New(static.PROGRAM_NAME + " error: license required")
+	ConfigErrProjectRootRequired          = errors.New(static.PROGRAM_NAME + " error: project root required")
+	ConfigErrAddLicenseFileNoticeRequired = errors.New(static.PROGRAM_NAME + " error: license file option of license notice option required")
+
+	// Other errors
+	ErrIndexOutOfRange      = errors.New("error: index out of range")
+	ErrLicenseNotFound      = errors.New(static.PROGRAM_NAME + " error: license not found")
+	ErrPathDoesNotExist     = errors.New(static.PROGRAM_NAME + " error: path does not exist")
+	ErrMissingConfigPath    = errors.New(static.PROGRAM_NAME + " error: missing config path")
+	ErrHelpRedundantArgs    = errors.New(static.PROGRAM_NAME + " error: help was called with redundant argument(s)")
+	ErrVersionRedundantArgs = errors.New(static.PROGRAM_NAME + " error: version was called with redundant argument(s)")
 )

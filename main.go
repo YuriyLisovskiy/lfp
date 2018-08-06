@@ -4,8 +4,18 @@
 
 package main
 
-import "github.com/YuriyLisovskiy/lofp/src"
+import (
+	"log"
+
+	"github.com/YuriyLisovskiy/lofp/src"
+)
 
 func main() {
-	src.RunCLI()
+	if err := src.RunCLI(); err != nil {
+		if src.DEBUG {
+			log.Panic(err)
+		} else {
+			log.Println(err)
+		}
+	}
 }

@@ -5,7 +5,7 @@
 package static
 
 var LICENSE_NOTICE_TEMPLATE =
-`// Copyright (c) %d %s
+`// Copyright (c) %s %s
 // Distributed under the %s,
 // see the accompanying file LICENSE or %s
 
