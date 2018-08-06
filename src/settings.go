@@ -2,8 +2,8 @@
 // Distributed under the MIT software license, see the accompanying
 // file LICENSE or https://opensource.org/licenses/MIT
 
-// TODO: remove before production!
+// TODO: set to false in production!
 
 package src
 
-var DEBUG = true
+var DEBUG = false

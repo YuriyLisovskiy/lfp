@@ -5,7 +5,7 @@
 package static
 
 const (
-	PROGRAM_NAME = "lofp"
+	PROGRAM_NAME = "lfp"
 	VERSION      = "v0.0.1-alpha"
 	ABOUT        = PROGRAM_NAME + " " + VERSION + "\n\n" +
 		"A utility for licensing existing project\n" +

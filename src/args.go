@@ -7,10 +7,10 @@ package src
 import "flag"
 
 var (
-	lofp       = flag.NewFlagSet("lofp", flag.ContinueOnError)
-	helpPtr    = lofp.Bool("help", false, "prints usage")
-	configPtr  = lofp.String("config", "", "set config path")
-	versionPtr = lofp.Bool("version", false, "prints version")
+	lfp       = flag.NewFlagSet("lfp", flag.ContinueOnError)
+	helpPtr    = lfp.Bool("help", false, "prints usage")
+	configPtr  = lfp.String("config", "", "set config path")
+	versionPtr = lfp.Bool("version", false, "prints version")
 )
 
 // validateArgs checks if args is correct.

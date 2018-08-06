@@ -16,15 +16,15 @@ func RunCLI() error {
 	// if there are no arguments
 	if len(os.Args) == 1 {
 		print(static.ABOUT)
-		lofp.Usage()
+		lfp.Usage()
 		return nil
 	}
 
 	// parse command line arguments
-	if err := lofp.Parse(os.Args[1:]); err != nil {
+	if err := lfp.Parse(os.Args[1:]); err != nil {
 		return nil
 	}
-	arguments := lofp.Args()
+	arguments := lfp.Args()
 
 	// check if there is no errors in given arguments
 	if err := validateArgs(arguments); err != nil {
@@ -34,7 +34,7 @@ func RunCLI() error {
 	if *versionPtr {
 		println(static.VERSION)
 	} else if *helpPtr {
-		lofp.Usage()
+		lfp.Usage()
 	} else {
 
 		// read and parse config file

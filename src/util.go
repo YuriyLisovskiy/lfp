@@ -6,12 +6,12 @@ package src
 
 import (
 	"os"
+	"fmt"
+	"io/ioutil"
 
 	"github.com/YuriyLisovskiy/lofp/src/licenses"
 	"github.com/YuriyLisovskiy/lofp/src/licenses/bsd"
 	"github.com/YuriyLisovskiy/lofp/src/licenses/gnu"
-	"io/ioutil"
-	"fmt"
 )
 
 func getLicense(license string) (map[string]string, error) {
