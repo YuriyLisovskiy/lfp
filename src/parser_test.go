@@ -2,15 +2,10 @@
 // Distributed under the MIT software license, see the accompanying
 // file LICENSE or https://opensource.org/licenses/MIT
 
-package main
+package src
 
-import (
-	"log"
-	"github.com/YuriyLisovskiy/lofp/src"
-)
+import "testing"
 
-func main() {
-	if err := src.RunCLI(); err != nil {
-		log.Panic(err)
-	}
+func Test(test *testing.T) {
+
 }
