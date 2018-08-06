@@ -10,7 +10,7 @@ import (
 	"io/ioutil"
 
 	"gopkg.in/yaml.v2"
-	"github.com/YuriyLisovskiy/lofp/src/static"
+	"github.com/YuriyLisovskiy/lfp/src/static"
 )
 
 func processPaths(cfg Config) error {

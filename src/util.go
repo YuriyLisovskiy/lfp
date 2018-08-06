@@ -9,9 +9,9 @@ import (
 	"fmt"
 	"io/ioutil"
 
-	"github.com/YuriyLisovskiy/lofp/src/licenses"
-	"github.com/YuriyLisovskiy/lofp/src/licenses/bsd"
-	"github.com/YuriyLisovskiy/lofp/src/licenses/gnu"
+	"github.com/YuriyLisovskiy/lfp/src/licenses"
+	"github.com/YuriyLisovskiy/lfp/src/licenses/bsd"
+	"github.com/YuriyLisovskiy/lfp/src/licenses/gnu"
 )
 
 func getLicense(license string) (map[string]string, error) {

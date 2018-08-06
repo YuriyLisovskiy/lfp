@@ -8,7 +8,7 @@ import (
 	"os"
 	"io/ioutil"
 
-	"github.com/YuriyLisovskiy/lofp/src/static"
+	"github.com/YuriyLisovskiy/lfp/src/static"
 )
 
 func RunCLI() error {

@@ -7,7 +7,7 @@ package main
 import (
 	"log"
 
-	"github.com/YuriyLisovskiy/lofp/src"
+	"github.com/YuriyLisovskiy/lfp/src"
 )
 
 func main() {

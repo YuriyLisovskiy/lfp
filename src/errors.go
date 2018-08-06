@@ -7,7 +7,7 @@ package src
 import (
 	"errors"
 
-	"github.com/YuriyLisovskiy/lofp/src/static"
+	"github.com/YuriyLisovskiy/lfp/src/static"
 )
 
 var (
