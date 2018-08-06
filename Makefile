@@ -10,7 +10,7 @@ target:
 install:
 	@bash ./install.sh
 
-PACKAGES = ./src ./src/args
+PACKAGES = ./src
 
 coverage: test
 	@echo Generating coverage report...
