@@ -17,8 +17,6 @@ before_script:
   - go version
   - go env
   - go get -v -t ./src/...
-  - go get github.com/mattn/goveralls
 
 script:
   - make test
-  - goveralls -coverprofile=coverage.out -service travis-ci

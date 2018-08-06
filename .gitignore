@@ -17,3 +17,5 @@ coverage.html
 
 # Local
 bin/
+*.yml
+!.travis.yml
