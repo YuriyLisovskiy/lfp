@@ -8,7 +8,7 @@ package gnu
 // <program>(string) <year>(string) <author>(string)
 var GNU_LESSER_GPL_V2_1 = map[string]string{
 	"name": "GNU Lesser General Public License v2.1",
-	"link": "https://opensource.org/licenses/LGPL-2.1",
+	"link": "https://www.gnu.org/licenses/lgpl-2.1",
 	"text":
 `                  GNU LESSER GENERAL PUBLIC LICENSE
                        Version 2.1, February 1999

@@ -17,7 +17,7 @@ var Test_getLicenseData = []struct {
 	expected map[string]string
 } {
 	{
-		"apache-v2",
+		"apache-2.0",
 		licenses.APACHE_LICENSE_2_0,
 	},
 	{
@@ -29,27 +29,27 @@ var Test_getLicenseData = []struct {
 		bsd.BSD_3_CLAUSE_LICENSE,
 	},
 	{
-		"eclipse-pl-v2",
+		"epl-2.0",
 		licenses.ECLIPSE_PUBLIC_LICENSE_V2_0,
 	},
 	{
-		"gnu-gpl-v2",
+		"gpl-2.0",
 		gnu.GNU_GPL_V2_0,
 	},
 	{
-		"gnu-gpl-v3",
+		"gpl-3.0",
 		gnu.GNU_GPL_V3_0,
 	},
 	{
-		"gnu-affero-gpl-v3",
+		"agpl-3.0",
 		gnu.GNU_AFFERO_GPL_V_3,
 	},
 	{
-		"gnu-lesser-gpl-v2.1",
+		"lgpl-2.1",
 		gnu.GNU_LESSER_GPL_V2_1,
 	},
 	{
-		"gnu-lesser-gpl-v3",
+		"lgpl-3.0",
 		gnu.GNU_LESSER_GPL_V3,
 	},
 	{
@@ -57,7 +57,7 @@ var Test_getLicenseData = []struct {
 		licenses.MIT_LICENSE,
 	},
 	{
-		"mozilla-pl-v2",
+		"mpl-2.0",
 		licenses.MOZILLA_PUBLIC_LICENSE_V2,
 	},
 	{

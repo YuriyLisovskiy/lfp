@@ -6,7 +6,7 @@ package gnu
 
 var GNU_LESSER_GPL_V3 = map[string]string{
 	"name": "GNU Lesser General Public License v3.0",
-	"link": "https://opensource.org/licenses/LGPL-3.0",
+	"link": "https://www.gnu.org/licenses/lgpl-3.0",
 	"text":
 `                   GNU LESSER GENERAL PUBLIC LICENSE
                        Version 3, 29 June 2007

@@ -39,9 +39,7 @@ func processPaths(cfg Config) error {
 				return err
 			}
 		}
-	}
-
-	if cfg.AddLicenseFile {
+	} else if cfg.AddLicenseFile {
 		createLicenseFile(cfg)
 	}
 
@@ -105,7 +103,11 @@ func transform(fileContent []byte, cfg Config) ([]byte, error) {
 			return []byte{}, err
 		}
 	} else {
-		licenseNotice = []byte(fmt.Sprintf(static.LICENSE_NOTICE_TEMPLATE, cfg.Year, cfg.Author, l["name"], l["link"]))
+		if cfg.License == "unlicense" {
+			licenseNotice = []byte(fmt.Sprintf("// Unlicense, see the accompanying file LICENSE or %s\n\n", l["link"]))
+		} else {
+			licenseNotice = []byte(fmt.Sprintf(static.LICENSE_NOTICE_TEMPLATE, cfg.Year, cfg.Author, l["name"], l["link"]))
+		}
 	}
 	return append(licenseNotice, fileContent...), nil
 }

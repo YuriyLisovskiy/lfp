@@ -6,7 +6,7 @@ package licenses
 
 var UNLICENSE = map[string]string{
 	"name": "",
-	"link": "",
+	"link": "http://unlicense.org/",
 	"text":
 `This is free and unencumbered software released into the public domain.
 

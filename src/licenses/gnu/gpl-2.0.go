@@ -8,7 +8,7 @@ package gnu
 // <program>(string) <year>(string) <author>(string)
 var GNU_GPL_V2_0 = map[string]string{
 	"name": "GNU General Public License v2.0",
-	"link": "https://opensource.org/licenses/GPL-2.0",
+	"link": "https://www.gnu.org/licenses/old-licenses/gpl-2.0.en.html",
 	"text":
 `                    GNU GENERAL PUBLIC LICENSE
                        Version 2, June 1991
