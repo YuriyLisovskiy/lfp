@@ -11,7 +11,7 @@ import (
 
 func main() {
 	platform := runtime.GOOS
-	binary := "lofp"
+	binary := "lfp"
 	switch platform {
 	case "windows":
 		binary += ".exe"
