@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
-#! only linux installation available for now!
+#! Only linux installation available using bash
 
 echo Installing lofp...
-sudo cp ./bin/lofp /usr/bin/lofp
+sudo cp $PWD/bin/lofp /usr/bin/lofp
 echo Done.
