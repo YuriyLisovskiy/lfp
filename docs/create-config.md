@@ -60,4 +60,4 @@ provided in `paths`, otherwise set it to `false`, **_optional_***:
 add_license_notice: true
 ```
 
-> * Setup at least one of `add_license_file` or `add_license_notice` options.
+> * Setup at least one of `add_license_file` or `add_license_notice` options to `true`.

@@ -12,7 +12,7 @@ paths:
   - execute.c
   - main.c
 
-custom_license_notice: /home/root/licenses/custom/notices/license_notice_for_skynet.txt
+custom_license_notice: /home/root/notices/license_notice_for_skynet.txt
 
 project_root: /home/root/projects/skynet
 

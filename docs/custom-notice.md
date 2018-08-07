@@ -7,7 +7,7 @@ will be added to the all files, provided in `paths` field in configuration file.
 This is the default license notice which will be used if `custom_license_notice` field
 are not provided*:
 ```text
-// Copyright (c) <year(s)> <author(s)>
+// Copyright (c) <years> <authors>
 // Distributed under the <license name>,
 // see the accompanying file LICENSE or <license link>
 ```
