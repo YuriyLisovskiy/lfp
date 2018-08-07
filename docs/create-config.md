@@ -21,17 +21,14 @@ instead of the program name, see license requirements [here](licenses.md))*:
 program_description: Sowftware 'Skynet' is developed for human extermination (nope)
 ```
 
-Name(s) of a project's author(s)*:
+Name(s) of a project's author(s) and the year(s) whet this author has been
+developing the source(s), `name` and `year` must be provided*:
 ```yaml
 authors:
-  - John Smith
-  - Clint Eastwood
-```
-
-Year(s) when sources were developed*:
-```yaml
-years:
-  - 2000-2001
+  - name: John Smith
+    year: 2000
+  - name: Clint Eastwood
+    year: 2001
 ```
 
 License type, the list of licenses marking is available [here](licenses.md)*:
