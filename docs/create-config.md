@@ -3,7 +3,7 @@
 Currently [LFP](https://github.com/YuriyLisovskiy/lfp) supports only yaml config file format.
     
 > *See license requirements for filed necessity. The default license notice template
-requires <years>, <authors> and <license> fields.
+requires `<years>`, `<authors>` and `<license>` fields.
 
 Create a file, for example [`config.yml`](../sample/config.yml).
 > Keywords can be added in any other order.
