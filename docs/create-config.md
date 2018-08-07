@@ -2,7 +2,7 @@
 
 Currently [LFP](https://github.com/YuriyLisovskiy/lfp) supports only yaml config file format.
     
->*See license requirements for filed necessity. The default license notice template
+> *See license requirements for filed necessity. The default license notice template
 requires <years>, <authors> and <license> fields.
 
 Create a file, for example [`config.yml`](../sample/config.yml).
@@ -61,15 +61,15 @@ custom_license_notice: /home/root/notices/license_notice_for_skynet.txt
 ```
 
 Set `add_license_file` option to `true`, if it is required to add LICENSE file to the project root directory,
-otherwise set it to `false`, **_optional_***:
+otherwise set it to `false`, **_optional_****:
 ```yaml
 add_license_file: false
 ```
 
 Set up `add_license_notice` to `true`, if you need to add license notice to each file,
-provided in `paths`, otherwise set it to `false`, **_optional_***:
+provided in `paths`, otherwise set it to `false`, **_optional_****:
 ```yaml
 add_license_notice: true
 ```
 
-> * Setup at least one of `add_license_file` or `add_license_notice` options to `true`.
+> ** Setup at least one of `add_license_file` or `add_license_notice` options to `true`.
