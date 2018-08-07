@@ -4,3 +4,4 @@
 [![Build Status](https://travis-ci.org/YuriyLisovskiy/lofp.svg?branch=master)](https://travis-ci.org/YuriyLisovskiy/lofp)
 
 #### An informative README coming soon...
+For now all you can do is to read [docs](docs).
