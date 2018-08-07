@@ -4,7 +4,7 @@
 [![Build Status](https://travis-ci.org/YuriyLisovskiy/lfp.svg?branch=master)](https://travis-ci.org/YuriyLisovskiy/lfp)
 [![Project Status](https://img.shields.io/badge/status-development-red.svg)](https://travis-ci.org/YuriyLisovskiy/lfp)
 
-[LFP](https://travis-ci.org/YuriyLisovskiy/lfp) - tool which can help you to create the license and license notice for
+[LFP](https://github.com/YuriyLisovskiy/lfp) - tool which can help you to create the license and license notice for
 every file in the project.
 
 Currently it supports only built-in open source licenses, see [licenses](docs/licenses.md)
