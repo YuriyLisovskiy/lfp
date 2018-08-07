@@ -12,6 +12,16 @@ are not provided*:
 // see the accompanying file LICENSE or <license link>
 ```
 
-> * In this example C-language comments are used. The program automatically determine what
-the language is used and choose suitable comments for license notice (only for default
-license notice template). NOTE: this feature is in development now!
+##### List of available keywords:
+* `<years>`
+* `<authors>`
+* `<comment>`
+* `<program name>`
+* `<license name>`
+* `<license link>`
+* `<program description>`
+
+>In this example C-language comments are used temporarily. The program automatically
+determine what the language is used and choose suitable comments for license notice.
+>
+>NOTE: this feature is in development now!

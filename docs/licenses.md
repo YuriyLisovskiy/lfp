@@ -6,13 +6,13 @@ See [contributing](../.github/CONTRIBUTING.md) and [opening issues](../.github/I
 ### Apache
 * `apache-2.0` - Apache License Version 2.0
 
-> Requires `year` and `author` fields.
+> Requires `<years>` and `<authors>` fields.
 
 ### BSD
 * `bsd-2-clause` - BSD 2-Clause License
 * `bsd-3-clause` - BSD 3-Clause License
 
-> Requires `year` and `author` fields.
+> Requires `<years>` and `<authors>` fields.
 
 ### Eclipse
 * `epl-2.0` - Eclipse Public License - v2.0
@@ -24,12 +24,13 @@ See [contributing](../.github/CONTRIBUTING.md) and [opening issues](../.github/I
 * `lgpl-2.1` - GNU Lesser General Public License v2.1
 * `lgpl-3.0` - GNU Lesser General Public License v3.0
 
-> Requires `program_name`, `year` and `author` fields.
+> Requires `<program description>`, `<years>` and `<authors>` fields except
+`lgpl-3.0`.
 
 ### MIT
 * `mit` - MIT License
 
-> Requires `year` and `author` fields.
+> Requires `<years>` and `<authors>` fields.
 
 ### Mozilla
 * `mpl-2.0` - Mozilla Public License Version 2.0

@@ -12,14 +12,24 @@ will be set to the project root directory name, **_optional_**:
 program_name: Skynet
 ```
 
-Name(s) of a project's author(s), separated by comma(s), **_required_**:
+The program's name and a brief idea of what it does (some licenses require program description
+instead of the program name, see license requirements [here](licenses.md)), **_optional_** if
+chosen license does not require this:
 ```yaml
-author: John Smith, Clint Eastwood
+program_description: Sowftware 'Skynet' is developed for human extermination (nope)
 ```
 
-Year(s) when sources were developed, separated by comma(s), **_required_**:
+Name(s) of a project's author(s), **_required_**:
 ```yaml
-year: 2000, 2001
+authors:
+  - John Smith
+  - Clint Eastwood
+```
+
+Year(s) when sources were developed, **_required_**:
+```yaml
+years:
+  - 2000-2001
 ```
 
 License type, the list of licenses marking is available [here](licenses.md), **_required_**:
