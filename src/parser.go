@@ -42,7 +42,16 @@ func processPaths(cfg Config) error {
 		}
 	}
 	if cfg.AddLicenseFile {
-		createLicenseFile(cfg)
+		data, err := createLicenseFile(cfg)
+		if err != nil {
+			return err
+		}
+
+		// write to file generated license
+		err = ioutil.WriteFile(cfg.ProjectRoot + "/LICENSE", data, 0644)
+		if err != nil {
+			return err
+		}
 	}
 
 	return nil

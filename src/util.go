@@ -7,9 +7,7 @@ package src
 import (
 	"os"
 	"strings"
-	"io/ioutil"
-
-	"github.com/YuriyLisovskiy/lfp/src/licenses"
+		"github.com/YuriyLisovskiy/lfp/src/licenses"
 	"github.com/YuriyLisovskiy/lfp/src/licenses/bsd"
 	"github.com/YuriyLisovskiy/lfp/src/licenses/gnu"
 	"regexp"
@@ -48,8 +46,9 @@ func getLicense(license string) (map[string]string, error) {
 	return res, nil
 }
 
-func createLicenseFile(cfg Config) error {
-
+// createLicenseFile generates license from a template
+func createLicenseFile(cfg Config) ([]byte, error) {
+	var ret []byte
 	path := cfg.ProjectRoot + "/LICENSE"
 
 	// detect if file exists
@@ -59,13 +58,13 @@ func createLicenseFile(cfg Config) error {
 	if os.IsNotExist(err) {
 		file, err := os.Create(path)
 		if err != nil {
-			return err
+			return ret, err
 		}
 		defer file.Close()
 	}
 	license, err := getLicense(cfg.License)
 	if err != nil {
-		return err
+		return ret, err
 	}
 	licenseContent := license["text"]
 	switch cfg.License {
@@ -83,15 +82,10 @@ func createLicenseFile(cfg Config) error {
 	default:
 	}
 	if err != nil {
-		return err
+		return ret, err
 	}
-
-	// write to file generated license
-	err = ioutil.WriteFile(path, []byte(licenseContent), 0644)
-	if err != nil {
-		return err
-	}
-	return nil
+	ret = []byte(licenseContent)
+	return ret, nil
 }
 
 // prepareLicense replaces all given keywords to actual data
