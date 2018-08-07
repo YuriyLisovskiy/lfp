@@ -3,14 +3,14 @@
 Currently [LFP](https://github.com/YuriyLisovskiy/lfp) supports only yaml config file format.
     
 > *See license requirements for filed necessity. The default license notice template
-requires `<years>`, `<authors>` and `<license>` fields.
+requires `years`, `authors` and `license` fields.
 
 Create a file, for example [`config.yml`](../sample/config.yml).
 > Keywords can be added in any other order.
 
 Program's name (some licenses require program name, see license 
 requirements [here](licenses.md)). If this field is not provided, program name 
-will be set to the project root directory name **_optional_**:
+will be set to the project root directory name, **_optional_**:
 ```yaml
 program_name: Skynet
 ```
@@ -54,20 +54,20 @@ paths:
   - main.c
 ```
 
-Add the path to custom license notice. If this field are not provided, default template 
+Add the path to custom license notice. If this field is not provided, default template 
 will be used, custom license notice tutorial available [here](custom-notice.md), **_optional_**:
 ```yaml
 custom_license_notice: /home/root/notices/license_notice_for_skynet.txt
 ```
 
 Set `add_license_file` option to `true`, if it is required to add LICENSE file to the project root directory,
-otherwise set it to `false`, **_optional_****:
+otherwise set it to `false`, **_optional_** **:
 ```yaml
 add_license_file: false
 ```
 
-Set up `add_license_notice` to `true`, if you need to add license notice to each file,
-provided in `paths`, otherwise set it to `false`, **_optional_****:
+Set `add_license_notice` to `true`, if you need to add license notice to each file,
+provided in `paths`, otherwise set it to `false`, **_optional_** **:
 ```yaml
 add_license_notice: true
 ```
