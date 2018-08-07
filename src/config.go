@@ -9,13 +9,16 @@ import "strings"
 // Configuration for licensing the project, see sample/sample.yml
 type Config struct {
 	// Author
-	Author string `yaml:"author"`
+	Authors []string `yaml:"authors"`
 
 	// Year
-	Year string `yaml:"year"`
+	Years []string `yaml:"years"`
 
 	// Program name
 	ProgramName string `yaml:"program_name"`
+
+	// Short description of the program
+	ProgramDescription string `yaml:"program_description"`
 
 	// Paths to add license notice
 	Paths []string `yaml:"paths"`
@@ -37,10 +40,10 @@ type Config struct {
 }
 
 func (cfg Config) validate() error {
-	if cfg.Author == "" {
+	if len(cfg.Authors) == 0 {
 		return ConfigErrAuthorRequired
 	}
-	if cfg.Year == "" {
+	if len(cfg.Years) == 0 {
 		return ConfigErrYearRequired
 	}
 	if len(cfg.Paths) == 0 {

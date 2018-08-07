@@ -11,8 +11,8 @@ var Test_validate_Data = struct {
 	err error
 }{
 	cfg: Config{
-		Author:      "John Smith",
-		Year:        "2010",
+		Authors:     []string{"John Smith"},
+		Years:       []string{"2010"},
 		ProgramName: "some program",
 		Paths: []string{
 			"test/...",
@@ -39,8 +39,8 @@ var Test_normalize_Data = struct {
 	err error
 }{
 	cfg: Config{
-		Author: "John Smith",
-		Year:   "2010",
+		Authors: []string{"John Smith"},
+		Years:   []string{"2010"},
 		Paths: []string{
 			"/test/...",
 			"some/",
@@ -135,12 +135,12 @@ func Test_removeItem_ErrIndexOutOfRange(test *testing.T) {
 }
 
 var Test_validate_ErrData = []struct {
-	cfg Config
+	cfg      Config
 	expected error
 }{
 	{
 		cfg: Config{
-			Year:        "2010",
+			Years:       []string{"2010"},
 			ProgramName: "some program",
 			Paths: []string{
 				"test/...",
@@ -157,7 +157,7 @@ var Test_validate_ErrData = []struct {
 	},
 	{
 		cfg: Config{
-			Author:      "John Smith",
+			Authors:     []string{"John Smith"},
 			ProgramName: "some program",
 			Paths: []string{
 				"test/...",
@@ -174,9 +174,9 @@ var Test_validate_ErrData = []struct {
 	},
 	{
 		cfg: Config{
-			Author:      "John Smith",
-			Year:        "2010",
-			ProgramName: "some program",
+			Authors:             []string{"John Smith"},
+			Years:               []string{"2010"},
+			ProgramName:         "some program",
 			License:             "apache-v2",
 			AddLicenseFile:      true,
 			AddLicenseNotice:    false,
@@ -187,8 +187,8 @@ var Test_validate_ErrData = []struct {
 	},
 	{
 		cfg: Config{
-			Author:      "John Smith",
-			Year:        "2010",
+			Authors:     []string{"John Smith"},
+			Years:       []string{"2010"},
 			ProgramName: "some program",
 			Paths: []string{
 				"test/...",
@@ -204,8 +204,8 @@ var Test_validate_ErrData = []struct {
 	},
 	{
 		cfg: Config{
-			Author:      "John Smith",
-			Year:        "2010",
+			Authors:     []string{"John Smith"},
+			Years:       []string{"2010"},
 			ProgramName: "some program",
 			Paths: []string{
 				"test/...",
@@ -221,8 +221,8 @@ var Test_validate_ErrData = []struct {
 	},
 	{
 		cfg: Config{
-			Author:      "John Smith",
-			Year:        "2010",
+			Authors:     []string{"John Smith"},
+			Years:       []string{"2010"},
 			ProgramName: "some program",
 			Paths: []string{
 				"test/...",

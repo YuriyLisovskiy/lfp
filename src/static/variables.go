@@ -5,8 +5,8 @@
 package static
 
 var LICENSE_NOTICE_TEMPLATE =
-`// Copyright (c) %s %s
-// Distributed under the %s,
-// see the accompanying file LICENSE or %s
+`<comment> Copyright (c) <years> <authors>
+<comment> Distributed under the <license name>,
+<comment> see the accompanying file LICENSE or <license link>
 
 `

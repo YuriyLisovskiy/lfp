@@ -6,13 +6,13 @@ package src
 
 import (
 	"os"
-	"fmt"
+	"strings"
 	"io/ioutil"
 
 	"github.com/YuriyLisovskiy/lfp/src/licenses"
 	"github.com/YuriyLisovskiy/lfp/src/licenses/bsd"
 	"github.com/YuriyLisovskiy/lfp/src/licenses/gnu"
-)
+	)
 
 func getLicense(license string) (map[string]string, error) {
 	var res map[string]string
@@ -69,12 +69,30 @@ func createLicenseFile(cfg Config) error {
 	licenseContent := license["text"]
 	switch cfg.License {
 	case "apache-2.0", "mit", "bsd-2-clause", "bsd-3-clause":
-		licenseContent = fmt.Sprintf(licenseContent, cfg.Year, cfg.Author)
+		licenseContent, err = prepareLicense(
+			licenseContent,
+			[]string{"<years>", "<authors>"},
+			[]string{aggregate(cfg.Years, ", "), aggregate(cfg.Authors, ", ")},
+			[]int{1, 1},
+		)
 	case "lgpl-2.1", "gpl-2.0":
-		licenseContent = fmt.Sprintf(licenseContent, cfg.ProgramName, cfg.Year, cfg.Author, cfg.ProgramName, cfg.Year, cfg.Author)
+		licenseContent, err = prepareLicense(
+			licenseContent,
+			[]string{"<program name>", "<years>", "<authors>"},
+			[]string{cfg.ProgramName, aggregate(cfg.Years, ", "), aggregate(cfg.Authors, ", ")},
+			[]int{2, 2, 2},
+		)
 	case "gpl-3.0", "agpl-3.0":
-		licenseContent = fmt.Sprintf(licenseContent, cfg.ProgramName, cfg.Year, cfg.Author)
+		licenseContent, err = prepareLicense(
+			licenseContent,
+			[]string{"<program name>", "<years>", "<authors>"},
+			[]string{cfg.ProgramName, aggregate(cfg.Years, ", "), aggregate(cfg.Authors, ", ")},
+			[]int{1, 1, 1},
+		)
 	default:
+	}
+	if err != nil {
+		return err
 	}
 
 	// write to file generated license
@@ -83,6 +101,32 @@ func createLicenseFile(cfg Config) error {
 		return err
 	}
 	return nil
+}
+
+// prepareLicense replaces all given keywords to actual data
+func prepareLicense(template string, old, new []string, count []int) (string, error) {
+	ret := template
+	if len(old) == len(new) && len(old) == len(count) {
+		for i := range old {
+			ret = strings.Replace(ret, old[i], new[i], count[i])
+		}
+	} else {
+		return "", ErrOldNewCountInvalidLen
+	}
+	return ret, nil
+}
+
+// aggregate converts string array to string
+func aggregate(arr []string, sep string) string {
+	ret := ""
+	for i, item := range arr {
+		if i < len(arr)-1 {
+			ret += item + sep
+		} else {
+			ret += item
+		}
+	}
+	return ret
 }
 
 func pathExists(path string) (bool, error) {

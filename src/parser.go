@@ -25,21 +25,23 @@ func processPaths(cfg Config) error {
 			}
 			paths = append(paths, subPaths...)
 		}
+		licenseNotice, err := prepareLicenseNotice(cfg)
+		if err != nil {
+			return err
+		}
 		for _, path := range paths {
 			fileData, err := ioutil.ReadFile(path)
 			if err != nil {
 				return err
 			}
-			resultFileData, err := transform(fileData, cfg)
-			if err != nil {
-				return err
-			}
+			resultFileData := append(licenseNotice, fileData...)
 			err = ioutil.WriteFile(path, resultFileData, 0644)
 			if err != nil {
 				return err
 			}
 		}
-	} else if cfg.AddLicenseFile {
+	}
+	if cfg.AddLicenseFile {
 		createLicenseFile(cfg)
 	}
 
@@ -90,24 +92,51 @@ func parsePath(path string) ([]string, error) {
 	return ret, nil
 }
 
-// transform appends license notice to given file content.
-func transform(fileContent []byte, cfg Config) ([]byte, error) {
-	l, err := getLicense(cfg.License)
-	if err != nil {
-		return []byte{}, err
-	}
-	var licenseNotice []byte
+// prepareLicenseNotice create license notice from given template
+func prepareLicenseNotice(cfg Config) (ret []byte, err error) {
+	var template string
 	if cfg.CustomLicenseNotice != "" {
-		licenseNotice, err = ioutil.ReadFile(cfg.CustomLicenseNotice)
+		templateBytes, err := ioutil.ReadFile(cfg.CustomLicenseNotice)
 		if err != nil {
 			return []byte{}, err
 		}
+		template = string(templateBytes[:])
 	} else {
-		if cfg.License == "unlicense" {
-			licenseNotice = []byte(fmt.Sprintf("// Unlicense, see the accompanying file LICENSE or %s\n\n", l["link"]))
-		} else {
-			licenseNotice = []byte(fmt.Sprintf(static.LICENSE_NOTICE_TEMPLATE, cfg.Year, cfg.Author, l["name"], l["link"]))
-		}
+		template = static.LICENSE_NOTICE_TEMPLATE
 	}
-	return append(licenseNotice, fileContent...), nil
+	license, err := getLicense(cfg.License)
+	if err != nil {
+		return
+	}
+	if cfg.License == "unlicense" {
+		ret = []byte(fmt.Sprintf("// Unlicense, see the accompanying file LICENSE or %s\n\n", license["link"]))
+	} else {
+
+		// Set license name
+		retStr := strings.Replace(template, "<license name>", license["name"], -1)
+
+		// Set license link
+		retStr = strings.Replace(retStr, "<license link>", license["link"], -1)
+
+		// Set authors
+		retStr = strings.Replace(retStr, "<authors>", aggregate(cfg.Authors, ", "), -1)
+
+		// Set years
+		retStr = strings.Replace(retStr, "<years>", aggregate(cfg.Years, ", "), -1)
+
+		// Set comments
+		retStr = strings.Replace(retStr, "<comment>", "//", -1)
+
+		// Set other fields if custom license notice template is provided
+		if cfg.CustomLicenseNotice != "" {
+
+			// Set program name
+			retStr = strings.Replace(retStr, "<program name>", cfg.ProgramName, -1)
+
+			// Set program description
+			retStr = strings.Replace(retStr, "<program description>", cfg.ProgramDescription, -1)
+		}
+		ret = []byte(retStr)
+	}
+	return
 }
