@@ -4,8 +4,11 @@
 
 package gnu
 
-// fmt.Sprintf() requires arguments in the order:
-// <program description>(string) <years>(string array) <authors>(string array)
+// Requires:
+// <program description>
+// <year>
+// <author>
+
 var GNU_AFFERO_GPL_V_3 = map[string]string{
 	"name": "GNU Affero General Public License v3.0",
 	"link": "https://www.gnu.org/licenses/agpl-3.0",
@@ -642,7 +645,7 @@ state the exclusion of warranty; and each file should have at least
 the "copyright" line and a pointer to where the full notice is found.
 
     <program description>
-    Copyright (C) <years> <authors>
+    {{Copyright (C) <year> <author>}}
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU Affero General Public License as published

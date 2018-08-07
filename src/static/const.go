@@ -6,7 +6,7 @@ package static
 
 const (
 	PROGRAM_NAME = "lfp"
-	VERSION      = "v0.0.1-alpha"
+	VERSION      = "v1.0-beta"
 	ABOUT        = PROGRAM_NAME + " " + VERSION + "\n\n" +
 		"A utility for licensing existing project\n" +
 		"Yuriy Lisovskiy (c) 2018 <https://github.com/YuriyLisovskiy>\n\n\n"

@@ -4,11 +4,11 @@
 
 package gnu
 
-// fmt.Sprintf() requires arguments in the order:
-//  <program name>(string)
-//  <program description>(string)
-//  <year>(string, 2 times)
-//  <author>(string, 2 times)
+// Requires:
+// <program name>
+// <program description>
+// <year>
+// <author>
 
 var GNU_GPL_V3_0 = map[string]string{
 	"name": "GNU General Public License v3.0",

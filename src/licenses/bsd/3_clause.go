@@ -4,15 +4,17 @@
 
 package bsd
 
-// fmt.Sprintf() requires arguments in the order:
-// <years>(string array) <authors>(string array)
+// Requires:
+// <year>
+// <author>
+
 var BSD_3_CLAUSE_LICENSE = map[string]string{
 	"name": "BSD 3-Clause License",
 	"link": "https://opensource.org/licenses/BSD-3-Clause",
 	"text":
 `BSD 3-Clause License
 
-Copyright (c) <years> <authors>
+{{Copyright (c) <year> <author>}}
 All rights reserved.
 
 Redistribution and use in source and binary forms, with or without

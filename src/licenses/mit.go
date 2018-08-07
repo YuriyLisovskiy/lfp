@@ -4,9 +4,9 @@
 
 package licenses
 
-// fmt.Sprintf() requires arguments in the order:
-//  <year>(string)
-//  <author>(string)
+// Requires:
+// <year>
+// <author>
 
 var MIT_LICENSE = map[string]string{
 	"name": "MIT License",
