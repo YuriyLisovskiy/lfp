@@ -58,14 +58,10 @@ func RunCLI() error {
 		}
 
 		// run main process
-		err = process(cfg)
+		err = processPaths(cfg)
 		if err != nil {
 			return err
 		}
 	}
 	return nil
-}
-
-func process(cfg Config) error {
-	return processPaths(cfg)
 }
