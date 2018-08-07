@@ -5,12 +5,24 @@ and setup `custom_license_notice` field in configuration file. All text from `li
 will be added to all files, provided in `paths` field in configuration file.
 
 This is the default license notice which will be used if `custom_license_notice` field
-is not provided*:
+is not provided:
+
+* Notice with single-line comments*
 ```text
-<comment> {{Copyright (c) <year> <author>}}
-<comment> Distributed under the <license name>,
-<comment> see the accompanying file LICENSE or <license link>
+<comment>  Copyright (c) <year> <author>
+<comment>  Distributed under the <license name>,
+<comment>  see the accompanying file LICENSE or <license link>
 ```
+* Notice template with multi-line comments*:
+```text
+<comment>
+   Copyright (c) <year> <author>
+   Distributed under the <license name>,
+   see the accompanying file LICENSE or <license link>
+<comment>
+```
+
+> *Some languages does not support single-line comments.
 
 ##### List of available keywords:
 * `<year>`
@@ -20,8 +32,3 @@ is not provided*:
 * `<license name>`
 * `<license link>`
 * `<program description>`
-
->*C-language comments are used temporarily. The program automatically determine 
-what the language is used and choose suitable comments for license notice.
->
->NOTE: this feature is in development now!
