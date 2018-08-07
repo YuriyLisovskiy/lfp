@@ -1,8 +1,13 @@
 program_name: Skynet
 
-author: John Smith, Clint Eastwood
+program_description: Sowftware 'Skynet' is developed for human extermination (nope)
 
-year: 2000, 2001
+authors:
+  - John Smith
+  - Clint Eastwood
+
+years:
+  - 2000
 
 license: agpl-3.0
 
