@@ -20,8 +20,8 @@ clean:
 install:
 	@echo Installing lfp...
 	@sudo mkdir -p /opt/lfp
-	@sudo cp $(TARGET) $(OPT)
-	@sudo ln -s $(OPT) $(PREFIX)
+	@sudo cp -r $(TARGET) $(OPT)
+	@sudo ln -sf $(OPT) $(PREFIX)
 	@echo Done.
 
 uninstall:
