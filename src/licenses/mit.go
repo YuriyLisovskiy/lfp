@@ -5,14 +5,14 @@
 package licenses
 
 // fmt.Sprintf() requires arguments in the order:
-// <year>(string) <author>(string)
+// <years>(string array) <authors>(string array)
 var MIT_LICENSE = map[string]string{
 	"name": "MIT License",
 	"link": "https://opensource.org/licenses/MIT",
 	"text":
 `MIT License
 
-Copyright (c) %s %s
+Copyright (c) <years> <authors>
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal

@@ -5,7 +5,7 @@
 package licenses
 
 // fmt.Sprintf() requires arguments in the order:
-// <year>(string) <author>(string)
+// <years>(string array) <authors>(string array)
 var APACHE_LICENSE_2_0 = map[string]string{
 	"name": "Apache License Version 2.0",
 	"link": "https://opensource.org/licenses/Apache-2.0",
@@ -198,7 +198,7 @@ var APACHE_LICENSE_2_0 = map[string]string{
       same "printed page" as the copyright notice for easier
       identification within third-party archives.
 
-   Copyright %s %s
+   Copyright <years> <authors>
 
    Licensed under the Apache License, Version 2.0 (the "License");
    you may not use this file except in compliance with the License.

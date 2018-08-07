@@ -5,7 +5,11 @@
 package gnu
 
 // fmt.Sprintf() requires arguments in the order:
-// <program>(string) <year>(string) <author>(string) <program>(string) <year>(string) <author>(string)
+//  <program name>(string)
+//  <program description>(string)
+//  <years>(string array, 2 times)
+//  <authors>(string array, 2 times)
+
 var GNU_GPL_V3_0 = map[string]string{
 	"name": "GNU General Public License v3.0",
 	"link": "https://www.gnu.org/licenses/gpl-3.0",
@@ -643,8 +647,8 @@ to attach them to the start of each source file to most effectively
 state the exclusion of warranty; and each file should have at least
 the "copyright" line and a pointer to where the full notice is found.
 
-    %s
-    Copyright (C) %s  %s
+    <program description>
+    Copyright (C) <years>  <authors>
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -664,7 +668,7 @@ Also add information on how to contact you by electronic and paper mail.
   If the program does terminal interaction, make it output a short
 notice like this when it starts in an interactive mode:
 
-    %s  Copyright (C) %s  %s
+    <program name>  Copyright (C) <years>  <authors>
     This program comes with ABSOLUTELY NO WARRANTY; for details type "show w".
 	This is free software, and you are welcome to redistribute it
 	under certain conditions; type "show c" for details.
