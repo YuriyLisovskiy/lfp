@@ -9,6 +9,7 @@ import "testing"
 var Test_prepareLicenseNoticeData = []struct {
 	content  []byte
 	cfg      Config
+	ext      string
 	expected []byte
 }{
 	{
@@ -25,11 +26,37 @@ var Test_prepareLicenseNoticeData = []struct {
 				},
 			},
 		},
+		ext: "cpp",
 		expected: []byte(
-`// Copyright (c) 2010 John Smith
-// Copyright (c) 2011 John Smith 2
-// Distributed under the MIT License,
-// see the accompanying file LICENSE or https://opensource.org/licenses/MIT
+`//  Copyright (c) 2010 John Smith
+//  Copyright (c) 2011 John Smith 2
+//  Distributed under the MIT License,
+//  see the accompanying file LICENSE or https://opensource.org/licenses/MIT
+
+`),
+	},
+	{
+		cfg: Config{
+			License: "mit",
+			Authors: []Author{
+				{
+					Name: "John Smith",
+					Year: "2010",
+				},
+				{
+					Name: "John Smith 2",
+					Year: "2011",
+				},
+			},
+		},
+		ext: "html",
+		expected: []byte(
+`<!--
+  Copyright (c) 2010 John Smith
+  Copyright (c) 2011 John Smith 2
+  Distributed under the MIT License,
+  see the accompanying file LICENSE or https://opensource.org/licenses/MIT
+-->
 
 `),
 	},
@@ -37,7 +64,7 @@ var Test_prepareLicenseNoticeData = []struct {
 
 func Test_prepareLicenseNotice(test *testing.T) {
 	for _, data := range Test_prepareLicenseNoticeData {
-		actual, _ := prepareLicenseNotice(data.cfg)
+		actual, _ := prepareLicenseNotice(data.cfg, data.ext)
 		if len(actual) != len(data.expected) {
 			test.Errorf("parser.Test_prepareLicenseNotice: actual len != expected len:\n\t%d != %d\n", len(actual), len(data.expected))
 		}
@@ -52,6 +79,7 @@ func Test_prepareLicenseNotice(test *testing.T) {
 var Test_prepareLicenseNoticeErrLicenseNotFound_Data = []struct {
 	content  []byte
 	cfg      Config
+	ext      string
 	expected error
 }{
 	{
@@ -65,13 +93,28 @@ var Test_prepareLicenseNoticeErrLicenseNotFound_Data = []struct {
 				},
 			},
 		},
+		ext: "go",
 		expected: ErrLicenseNotFound,
+	},
+	{
+		content: []byte("package main\n\nfunc main() {\n\n}"),
+		cfg: Config{
+			License: "some-unknown-license",
+			Authors: []Author{
+				{
+					Name: "John Smith",
+					Year: "2010",
+				},
+			},
+		},
+		ext: "some-ext",
+		expected: ErrCommentNotFound,
 	},
 }
 
 func Test_prepareLicenseNoticeErrLicenseNotFound(test *testing.T) {
 	for _, data := range Test_prepareLicenseNoticeErrLicenseNotFound_Data {
-		_, err := prepareLicenseNotice(data.cfg)
+		_, err := prepareLicenseNotice(data.cfg, data.ext)
 		if err != data.expected {
 			test.Errorf("parser.Test_transformErrLicenseNotFound: actual != expected:\n\t%s != %s\n", err, data.expected)
 		}

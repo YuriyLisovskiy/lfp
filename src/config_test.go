@@ -34,7 +34,7 @@ var Test_validate_Data = struct {
 
 func Test_validate(test *testing.T) {
 	if err := Test_validate_Data.cfg.validate(); err != nil {
-		test.Errorf("args.Test_validate: actual != expected:\n\t%s != %s\n", err, Test_validate_Data.err)
+		test.Errorf("config.Test_validate: actual != expected:\n\t%s != %s\n", err, Test_validate_Data.err)
 	}
 }
 
@@ -67,19 +67,19 @@ func Test_normalize(test *testing.T) {
 	data := Test_normalize_Data
 	data.cfg, _ = data.cfg.normalize()
 	if len(data.cfg.Paths) != 3 {
-		test.Errorf("args.Test_normalize: actual != expected:\n\t%d != %d\n", len(data.cfg.Paths), 3)
+		test.Errorf("config.Test_normalize: actual != expected:\n\t%d != %d\n", len(data.cfg.Paths), 3)
 	}
 	if data.cfg.Paths[0] != "test/..." {
-		test.Errorf("args.Test_normalize: actual != expected:\n\t%s != %s\n", data.cfg.Paths[0], "test/...")
+		test.Errorf("config.Test_normalize: actual != expected:\n\t%s != %s\n", data.cfg.Paths[0], "test/...")
 	}
 	if data.cfg.Paths[1] != "some/" {
-		test.Errorf("args.Test_normalize: actual != expected:\n\t%s != %s\n", data.cfg.Paths[1], "some/")
+		test.Errorf("config.Test_normalize: actual != expected:\n\t%s != %s\n", data.cfg.Paths[1], "some/")
 	}
 	if data.cfg.Paths[2] != "dir/..." {
-		test.Errorf("args.Test_normalize: actual != expected:\n\t%s != %s\n", data.cfg.Paths[2], "dir/...")
+		test.Errorf("config.Test_normalize: actual != expected:\n\t%s != %s\n", data.cfg.Paths[2], "dir/...")
 	}
 	if data.cfg.ProjectRoot != "/home/root/path/to/project/program_name" {
-		test.Errorf("args.Test_normalize: actual != expected:\n\t%s != %s\n", data.cfg.ProjectRoot, "/home/root/path/to/project/program_name")
+		test.Errorf("config.Test_normalize: actual != expected:\n\t%s != %s\n", data.cfg.ProjectRoot, "/home/root/path/to/project/program_name")
 	}
 }
 
@@ -112,11 +112,11 @@ func Test_removeItem(test *testing.T) {
 	for _, data := range Test_removeItem_Data {
 		actual, _ := removeItem(data.input, data.pos)
 		if len(actual) != len(data.expected) {
-			test.Errorf("args.Test_removeItem: actual != expected:\n\t%s != %s\n", actual, data.expected)
+			test.Errorf("config.Test_removeItem: actual != expected:\n\t%s != %s\n", actual, data.expected)
 		}
 		for i, item := range actual {
 			if item != data.expected[i] {
-				test.Errorf("args.Test_removeItem: actual != expected:\n\t%s != %s\n", actual, data.expected)
+				test.Errorf("config.Test_removeItem: actual != expected:\n\t%s != %s\n", actual, data.expected)
 			}
 		}
 	}
@@ -138,7 +138,7 @@ func Test_removeItem_ErrIndexOutOfRange(test *testing.T) {
 	data := Test_removeItem_ErrIndexOutOfRangeData
 	_, actual := removeItem(data.input, data.pos)
 	if actual != data.expected {
-		test.Errorf("args.Test_removeItem_ErrIndexOutOfRange: actual != expected:\n\t%s != %s\n", actual, data.expected)
+		test.Errorf("config.Test_removeItem_ErrIndexOutOfRange: actual != expected:\n\t%s != %s\n", actual, data.expected)
 	}
 }
 
@@ -295,7 +295,7 @@ var Test_validate_ErrData = []struct {
 func Test_validate_Err(test *testing.T) {
 	for _, data := range Test_validate_ErrData {
 		if actual := data.cfg.validate(); actual == nil {
-			test.Errorf("args.Test_validate: actual != expected:\n\t%s != %s\n", actual, data.expected)
+			test.Errorf("config.Test_validate_Err: actual != expected:\n\t%s != %s\n", actual, data.expected)
 		}
 	}
 }

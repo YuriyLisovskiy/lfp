@@ -5,10 +5,18 @@
 package static
 
 var LICENSE_NOTICE_TEMPLATE = map[string]string{
-	"head": `<comment> Copyright (c) <year> <author>`,
-	"body": `
-<comment> Distributed under the <license name>,
-<comment> see the accompanying file LICENSE or <license link>
+	"head": `<comment>  Copyright (c) <year> <author>`,
+	"body-slc":
+`
+<comment>  Distributed under the <license name>,
+<comment>  see the accompanying file LICENSE or <license link>
+
+`,
+	"body-mlc":
+`
+  Distributed under the <license name>,
+  see the accompanying file LICENSE or <license link>
+<comment>
 
 `,
 }

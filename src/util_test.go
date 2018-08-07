@@ -121,7 +121,7 @@ func Test_findIndentReverse(test *testing.T) {
 	for _, data := range Test_findIndentReverse_Data {
 		actual := findIndentReverse(data.input)
 		if actual != data.expected {
-			test.Errorf("util.Test_getLicenseErrLicenseNotFound: actual != expected:\n\t%s != %s", actual, data.expected)
+			test.Errorf("util.Test_findIndentReverse: actual != expected:\n\t%s != %s", actual, data.expected)
 		}
 	}
 }

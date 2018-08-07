@@ -25,16 +25,28 @@ func processPaths(cfg Config) error {
 			}
 			paths = append(paths, subPaths...)
 		}
-		licenseNotice, err := prepareLicenseNotice(cfg)
-		if err != nil {
-			return err
-		}
+
+		// Map for holding license notices, it prevents from generating
+		// copies of notices
+		notices := make(map[string][]byte)
 		for _, path := range paths {
 			fileData, err := ioutil.ReadFile(path)
 			if err != nil {
 				return err
 			}
-			resultFileData := append(licenseNotice, fileData...)
+			ext := getExtension(path)
+
+			// Check if such notice already exists in map
+			if _, ok := notices[ext]; !ok {
+
+				// If not then create one more and add it to map
+				licenseNotice, err := prepareLicenseNotice(cfg, ext)
+				if err != nil {
+					return err
+				}
+				notices[ext] = licenseNotice
+			}
+			resultFileData := append(notices[ext], fileData...)
 			err = ioutil.WriteFile(path, resultFileData, 0644)
 			if err != nil {
 				return err
@@ -53,7 +65,6 @@ func processPaths(cfg Config) error {
 			return err
 		}
 	}
-
 	return nil
 }
 
@@ -102,8 +113,12 @@ func parsePath(path string) ([]string, error) {
 }
 
 // prepareLicenseNotice create license notice from given template
-func prepareLicenseNotice(cfg Config) (ret []byte, err error) {
+func prepareLicenseNotice(cfg Config, ext string) (ret []byte, err error) {
 	var template string
+	commentStart, commentEnd, err := getComments(ext)
+	if err != nil {
+		return []byte{}, err
+	}
 	if cfg.CustomLicenseNotice != "" {
 		templateBytes, err := ioutil.ReadFile(cfg.CustomLicenseNotice)
 		if err != nil {
@@ -113,12 +128,19 @@ func prepareLicenseNotice(cfg Config) (ret []byte, err error) {
 	} else {
 		header := static.LICENSE_NOTICE_TEMPLATE["head"]
 		for i := range cfg.Authors {
+			if commentStart != "" && commentEnd != "" && i != 0 {
+				header = strings.Replace(header, "<comment>", "", 1)
+			}
 			template += header
 			if i < len(cfg.Authors)-1 {
 				template += "\n"
 			}
 		}
-		template += static.LICENSE_NOTICE_TEMPLATE["body"]
+		if commentStart != "" && commentEnd != "" {
+			template += static.LICENSE_NOTICE_TEMPLATE["body-mlc"]
+		} else {
+			template += static.LICENSE_NOTICE_TEMPLATE["body-slc"]
+		}
 	}
 	license, err := getLicense(cfg.License)
 	if err != nil {
@@ -141,7 +163,12 @@ func prepareLicenseNotice(cfg Config) (ret []byte, err error) {
 		}
 
 		// Set comments
-		retStr = strings.Replace(retStr, "<comment>", "//", -1)
+		if commentStart != "" && commentEnd != "" {
+			retStr = strings.Replace(retStr, "<comment>", commentStart + "\n", 1)
+			retStr = strings.Replace(retStr, "<comment>", commentEnd, 1)
+		} else {
+			retStr = strings.Replace(retStr, "<comment>", commentStart, -1)
+		}
 
 		// Set other fields if custom license notice template is provided
 		if cfg.CustomLicenseNotice != "" {
