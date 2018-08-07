@@ -13,8 +13,7 @@ import (
 	"github.com/YuriyLisovskiy/lfp/src/licenses/bsd"
 	"github.com/YuriyLisovskiy/lfp/src/licenses/gnu"
 	"regexp"
-	"fmt"
-)
+	)
 
 func getLicense(license string) (map[string]string, error) {
 	var res map[string]string
@@ -107,14 +106,11 @@ func prepareLicense(template string, authors []Author, data map[string]string) (
 		// Find header template location
 		loc := crRegex.FindStringIndex(ret)
 
-		header := processHeader(crRegex.FindString(ret), authors, findIndentReverse(template[:loc[0]]))
+		header := processHeader(crRegex.FindString(ret), authors, findIndentReverse(ret[:loc[0]]))
 
 		// Replace header template with aggregated headers
 		ret = ret[:loc[0]] + header + ret[loc[1]:]
 	}
-
-	fmt.Println(ret)
-
 	return ret, nil
 }
 
@@ -122,9 +118,9 @@ func prepareLicense(template string, authors []Author, data map[string]string) (
 func findIndentReverse(templateFragment string) string {
 	indent := ""
 	start := len(templateFragment)-1
-	for start < 0 {
-		if templateFragment[start] == ' ' {
-			indent += " "
+	for start >= 0 {
+		if templateFragment[start] == ' ' || templateFragment[start] == '\t' {
+			indent += string(templateFragment[start])
 			start--
 		} else {
 			break
@@ -143,6 +139,9 @@ func processHeader(header string, authors []Author, indent string) string {
 		headerDone = strings.Replace(headerDone, "<author>", author.Name, -1)
 		if i < len(authors)-1 {
 			headerDone += "\n"
+		}
+		if i != 0 {
+			ret += indent
 		}
 		ret += headerDone
 	}
