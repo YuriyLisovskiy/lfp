@@ -11,8 +11,12 @@ var Test_validate_Data = struct {
 	err error
 }{
 	cfg: Config{
-		Authors:     []string{"John Smith"},
-		Years:       []string{"2010"},
+		Authors: []Author{
+			{
+				"John Smith",
+				"2010",
+			},
+		},
 		ProgramName: "some program",
 		Paths: []string{
 			"test/...",
@@ -39,8 +43,12 @@ var Test_normalize_Data = struct {
 	err error
 }{
 	cfg: Config{
-		Authors: []string{"John Smith"},
-		Years:   []string{"2010"},
+		Authors: []Author{
+			{
+				"John Smith",
+				"2010",
+			},
+		},
 		Paths: []string{
 			"/test/...",
 			"some/",
@@ -140,7 +148,7 @@ var Test_validate_ErrData = []struct {
 }{
 	{
 		cfg: Config{
-			Years:       []string{"2010"},
+			Authors:     []Author{},
 			ProgramName: "some program",
 			Paths: []string{
 				"test/...",
@@ -157,7 +165,12 @@ var Test_validate_ErrData = []struct {
 	},
 	{
 		cfg: Config{
-			Authors:     []string{"John Smith"},
+			Authors:     []Author{
+				{
+					"John Smith",
+					"",
+				},
+			},
 			ProgramName: "some program",
 			Paths: []string{
 				"test/...",
@@ -170,12 +183,42 @@ var Test_validate_ErrData = []struct {
 			ProjectRoot:         "/home/root/path/to/project/some_program",
 			CustomLicenseNotice: "",
 		},
-		expected: ConfigErrYearRequired,
+		expected: ConfigErrYearsAuthors,
 	},
 	{
 		cfg: Config{
-			Authors:             []string{"John Smith"},
-			Years:               []string{"2010"},
+			Authors:     []Author{
+				{
+					"John Smith",
+					"2010",
+				},
+				{
+					"",
+					"",
+				},
+			},
+			ProgramName: "some program",
+			Paths: []string{
+				"test/...",
+				"some/",
+				"./dir/...",
+			},
+			License:             "apache-v2",
+			AddLicenseFile:      true,
+			AddLicenseNotice:    false,
+			ProjectRoot:         "/home/root/path/to/project/some_program",
+			CustomLicenseNotice: "",
+		},
+		expected: ConfigErrYearsAuthors,
+	},
+	{
+		cfg: Config{
+			Authors:     []Author{
+				{
+					"John Smith",
+					"2010",
+				},
+			},
 			ProgramName:         "some program",
 			License:             "apache-v2",
 			AddLicenseFile:      true,
@@ -187,8 +230,12 @@ var Test_validate_ErrData = []struct {
 	},
 	{
 		cfg: Config{
-			Authors:     []string{"John Smith"},
-			Years:       []string{"2010"},
+			Authors:     []Author{
+				{
+					"John Smith",
+					"2010",
+				},
+			},
 			ProgramName: "some program",
 			Paths: []string{
 				"test/...",
@@ -204,8 +251,12 @@ var Test_validate_ErrData = []struct {
 	},
 	{
 		cfg: Config{
-			Authors:     []string{"John Smith"},
-			Years:       []string{"2010"},
+			Authors:     []Author{
+				{
+					"John Smith",
+					"2010",
+				},
+			},
 			ProgramName: "some program",
 			Paths: []string{
 				"test/...",
@@ -221,8 +272,12 @@ var Test_validate_ErrData = []struct {
 	},
 	{
 		cfg: Config{
-			Authors:     []string{"John Smith"},
-			Years:       []string{"2010"},
+			Authors:     []Author{
+				{
+					"John Smith",
+					"2010",
+				},
+			},
 			ProgramName: "some program",
 			Paths: []string{
 				"test/...",

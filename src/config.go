@@ -6,13 +6,15 @@ package src
 
 import "strings"
 
+type Author struct {
+	Name string `yaml:"name"`
+	Year string `yaml:"year"`
+}
+
 // Configuration for licensing the project, see sample/sample.yml
 type Config struct {
 	// Author
-	Authors []string `yaml:"authors"`
-
-	// Year
-	Years []string `yaml:"years"`
+	Authors []Author `yaml:"authors"`
 
 	// Program name
 	ProgramName string `yaml:"program_name"`
@@ -43,8 +45,10 @@ func (cfg Config) validate() error {
 	if len(cfg.Authors) == 0 {
 		return ConfigErrAuthorRequired
 	}
-	if len(cfg.Years) == 0 {
-		return ConfigErrYearRequired
+	for _, author := range cfg.Authors {
+		if author.Name == "" || author.Year == "" {
+			return ConfigErrYearsAuthors
+		}
 	}
 	if len(cfg.Paths) == 0 {
 		return ConfigErrPathsRequired

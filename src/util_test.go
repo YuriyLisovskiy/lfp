@@ -92,114 +92,36 @@ var Test_getLicenseErrLicenseNotFoundData = struct {
 }
 
 func Test_getLicenseErrLicenseNotFound(test *testing.T) {
-	_, err := getLicense(Test_getLicenseErrLicenseNotFoundData.input)
+	data := Test_getLicenseErrLicenseNotFoundData
+	_, err := getLicense(data.input)
 	if err != ErrLicenseNotFound {
-		test.Errorf("util.Test_getLicenseErrLicenseNotFound: actual error != expected error:\n\t%s != %s",
-			err,
-			Test_getLicenseErrLicenseNotFoundData.expected,
-		)
+		test.Errorf("util.Test_getLicenseErrLicenseNotFound: actual error != expected error:\n\t%s != %s", err, data.expected)
 	}
 }
 
-var Test_aggregate_Data = []struct {
-	input     []string
-	separator string
-	expected  string
-}{
-	{
-		input:     []string{"some", "words", "to", "aggregate", "separated", "by", "comma"},
-		separator: ", ",
-		expected:  "some, words, to, aggregate, separated, by, comma",
-	},
-	{
-		input:     []string{"some", "another", "words", "to", "aggregate"},
-		separator: " ",
-		expected:  "some another words to aggregate",
-	},
-	{
-		input:     []string{},
-		separator: ".",
-		expected:  "",
-	},
-}
-
-func Test_aggregate(test *testing.T) {
-	for _, data := range Test_aggregate_Data {
-		actual := aggregate(data.input, data.separator)
-		if actual != data.expected {
-			test.Errorf("util.Test_aggregate: actual != expected:\n\t%s != %s\n", actual, data.expected)
-		}
-	}
-}
-
-var Test_prepareLicense_Data = struct {
-	old      []string
-	new      []string
-	count    []int
-	template string
+var Test_findIndentReverse_Data = []struct {
+	input string
 	expected string
 }{
-	template: "Some license template written by <authors> in <years> and one more time - <authors> =)",
-	old:      []string{"<authors>", "<years>"},
-	new: []string{
-		aggregate([]string{"Author 1", "Author 2"}, ", "),
-		"2018",
-	},
-	count:    []int{2, 1},
-	expected: "Some license template written by Author 1, Author 2 in 2018 and one more time - Author 1, Author 2 =)",
-}
-
-func Test_prepareLicense(test *testing.T) {
-	data := Test_prepareLicense_Data
-	actual, _ := prepareLicense(data.template, data.old, data.new, data.count)
-	if actual != data.expected {
-		test.Errorf("util.Test_prepareLicense: actual != expected:\n\t%s != %s\n", actual, data.expected)
-	}
-}
-
-var Test_prepareLicense_ErrOldNewCountInvalidLenData = []struct {
-	old      []string
-	new      []string
-	count    []int
-	template string
-	expected error
-}{
 	{
-		template: "Some license template written by <authors> in <years> and one more time - <authors> =)",
-		old:      []string{"<years>"},
-		new: []string{
-			aggregate([]string{"Author 1", "Author 2"}, ", "),
-			"2018",
-		},
-		count:    []int{2, 1},
-		expected: ErrOldNewCountInvalidLen,
+		input: "Hello, world\n       ",
+		expected: "       ",
 	},
 	{
-		template: "Some license template written by <authors> in <years> and one more time - <authors> =)",
-		old:      []string{"<authors>", "<years>"},
-		new: []string{
-			"2018",
-		},
-		count:    []int{2, 1},
-		expected: ErrOldNewCountInvalidLen,
+		input: "Hello, world                \n",
+		expected: "",
 	},
 	{
-		template: "Some license template written by <authors> in <years> and one more time - <authors> =)",
-		old:      []string{"<authors>", "<years>"},
-		new: []string{
-			aggregate([]string{"Author 1", "Author 2"}, ", "),
-			"2018",
-		},
-		count:    []int{2},
-		expected: ErrOldNewCountInvalidLen,
+		input: "",
+		expected: "",
 	},
 }
 
-func Test_prepareLicense_ErrOldNewCountInvalidLen(test *testing.T) {
-	for _, data := range Test_prepareLicense_ErrOldNewCountInvalidLenData {
-		_, actual := prepareLicense(data.template, data.old, data.new, data.count)
+func Test_findIndentReverse(test *testing.T) {
+	for _, data := range Test_findIndentReverse_Data {
+		actual := findIndentReverse(data.input)
 		if actual != data.expected {
-			test.Errorf("util.Test_prepareLicense: actual != expected:\n\t%s != %s\n", actual, data.expected)
+			test.Errorf("util.Test_getLicenseErrLicenseNotFound: actual != expected:\n\t%s != %s", actual, data.expected)
 		}
 	}
 }

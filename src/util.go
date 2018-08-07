@@ -12,7 +12,9 @@ import (
 	"github.com/YuriyLisovskiy/lfp/src/licenses"
 	"github.com/YuriyLisovskiy/lfp/src/licenses/bsd"
 	"github.com/YuriyLisovskiy/lfp/src/licenses/gnu"
-	)
+	"regexp"
+	"fmt"
+)
 
 func getLicense(license string) (map[string]string, error) {
 	var res map[string]string
@@ -69,26 +71,16 @@ func createLicenseFile(cfg Config) error {
 	licenseContent := license["text"]
 	switch cfg.License {
 	case "apache-2.0", "mit", "bsd-2-clause", "bsd-3-clause":
-		licenseContent, err = prepareLicense(
-			licenseContent,
-			[]string{"<years>", "<authors>"},
-			[]string{aggregate(cfg.Years, ", "), aggregate(cfg.Authors, ", ")},
-			[]int{1, 1},
-		)
-	case "lgpl-2.1", "gpl-2.0":
-		licenseContent, err = prepareLicense(
-			licenseContent,
-			[]string{"<program name>", "<years>", "<authors>"},
-			[]string{cfg.ProgramName, aggregate(cfg.Years, ", "), aggregate(cfg.Authors, ", ")},
-			[]int{2, 2, 2},
-		)
-	case "gpl-3.0", "agpl-3.0":
-		licenseContent, err = prepareLicense(
-			licenseContent,
-			[]string{"<program name>", "<years>", "<authors>"},
-			[]string{cfg.ProgramName, aggregate(cfg.Years, ", "), aggregate(cfg.Authors, ", ")},
-			[]int{1, 1, 1},
-		)
+		licenseContent, err = prepareLicense(licenseContent, cfg.Authors, map[string]string{})
+	case "gpl-3.0":
+		licenseContent, err = prepareLicense(licenseContent, cfg.Authors, map[string]string{
+			"<program name>": cfg.ProgramName,
+			"<program description>": cfg.ProgramDescription,
+		})
+	case "lgpl-2.1", "gpl-2.0", "agpl-3.0":
+		licenseContent, err = prepareLicense(licenseContent, cfg.Authors, map[string]string{
+			"<program description>": cfg.ProgramDescription,
+		})
 	default:
 	}
 	if err != nil {
@@ -104,27 +96,55 @@ func createLicenseFile(cfg Config) error {
 }
 
 // prepareLicense replaces all given keywords to actual data
-func prepareLicense(template string, old, new []string, count []int) (string, error) {
+func prepareLicense(template string, authors []Author, data map[string]string) (string, error) {
 	ret := template
-	if len(old) == len(new) && len(old) == len(count) {
-		for i := range old {
-			ret = strings.Replace(ret, old[i], new[i], count[i])
-		}
-	} else {
-		return "", ErrOldNewCountInvalidLen
+	for key, value := range data {
+		ret = strings.Replace(ret, key, value, -1)
 	}
+	crRegex, _ := regexp.Compile(`{{.+}}`)
+	for crRegex.MatchString(ret) {
+
+		// Find header template location
+		loc := crRegex.FindStringIndex(ret)
+
+		header := processHeader(crRegex.FindString(ret), authors, findIndentReverse(template[:loc[0]]))
+
+		// Replace header template with aggregated headers
+		ret = ret[:loc[0]] + header + ret[loc[1]:]
+	}
+
+	fmt.Println(ret)
+
 	return ret, nil
 }
 
-// aggregate converts string array to string
-func aggregate(arr []string, sep string) string {
-	ret := ""
-	for i, item := range arr {
-		if i < len(arr)-1 {
-			ret += item + sep
+// findIndentReverse searches for an indent at the end of template fragment before header template
+func findIndentReverse(templateFragment string) string {
+	indent := ""
+	start := len(templateFragment)-1
+	for start < 0 {
+		if templateFragment[start] == ' ' {
+			indent += " "
+			start--
 		} else {
-			ret += item
+			break
 		}
+	}
+	return indent
+}
+
+// processHeader aggregates headers from a template for all given authors
+func processHeader(header string, authors []Author, indent string) string {
+	header = strings.Replace(header, "{", "", -1)
+	header = strings.Replace(header, "}", "", -1)
+	ret := ""
+	for i, author := range authors {
+		headerDone := strings.Replace(header, "<year>", author.Year, -1)
+		headerDone = strings.Replace(headerDone, "<author>", author.Name, -1)
+		if i < len(authors)-1 {
+			headerDone += "\n"
+		}
+		ret += headerDone
 	}
 	return ret
 }

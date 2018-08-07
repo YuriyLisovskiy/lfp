@@ -102,7 +102,14 @@ func prepareLicenseNotice(cfg Config) (ret []byte, err error) {
 		}
 		template = string(templateBytes[:])
 	} else {
-		template = static.LICENSE_NOTICE_TEMPLATE
+		header := static.LICENSE_NOTICE_TEMPLATE["head"]
+		for i := range cfg.Authors {
+			template += header
+			if i < len(cfg.Authors)-1 {
+				template += "\n"
+			}
+		}
+		template += static.LICENSE_NOTICE_TEMPLATE["body"]
 	}
 	license, err := getLicense(cfg.License)
 	if err != nil {
@@ -119,10 +126,10 @@ func prepareLicenseNotice(cfg Config) (ret []byte, err error) {
 		retStr = strings.Replace(retStr, "<license link>", license["link"], -1)
 
 		// Set authors
-		retStr = strings.Replace(retStr, "<authors>", aggregate(cfg.Authors, ", "), -1)
-
-		// Set years
-		retStr = strings.Replace(retStr, "<years>", aggregate(cfg.Years, ", "), -1)
+		for _, author := range cfg.Authors {
+			retStr = strings.Replace(retStr, "<author>", author.Name, 1)
+			retStr = strings.Replace(retStr, "<year>", author.Year, 1)
+		}
 
 		// Set comments
 		retStr = strings.Replace(retStr, "<comment>", "//", -1)

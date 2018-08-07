@@ -17,6 +17,7 @@ var (
 	ConfigErrPathsRequired                = errors.New(static.PROGRAM_NAME + " error: path(s) required")
 	ConfigErrLicenseRequired              = errors.New(static.PROGRAM_NAME + " error: license required")
 	ConfigErrProjectRootRequired          = errors.New(static.PROGRAM_NAME + " error: project root required")
+	ConfigErrYearsAuthors                 = errors.New(static.PROGRAM_NAME + " error: year and(or) author is empty")
 	ConfigErrAddLicenseFileNoticeRequired = errors.New(static.PROGRAM_NAME + " error: license file option of license notice option required")
 
 	// Other errors

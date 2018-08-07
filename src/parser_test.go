@@ -6,23 +6,37 @@ package src
 
 import "testing"
 
-var Test_transformData = []struct {
+var Test_prepareLicenseNoticeData = []struct {
 	content  []byte
 	cfg      Config
 	expected []byte
 }{
 	{
 		cfg: Config{
-			License:  "mit",
-			Authors:   []string{"John Smith"},
-			Years:     []string{"2010", "2011"},
+			License: "mit",
+			Authors: []Author{
+				{
+					Name: "John Smith",
+					Year: "2010",
+				},
+				{
+					Name: "John Smith 2",
+					Year: "2011",
+				},
+			},
 		},
-		expected: []byte("// Copyright (c) 2010, 2011 John Smith\n// Distributed under the MIT License,\n// see the accompanying file LICENSE or https://opensource.org/licenses/MIT\n\n"),
+		expected: []byte(
+`// Copyright (c) 2010 John Smith
+// Copyright (c) 2011 John Smith 2
+// Distributed under the MIT License,
+// see the accompanying file LICENSE or https://opensource.org/licenses/MIT
+
+`),
 	},
 }
 
 func Test_prepareLicenseNotice(test *testing.T) {
-	for _, data := range Test_transformData {
+	for _, data := range Test_prepareLicenseNoticeData {
 		actual, _ := prepareLicenseNotice(data.cfg)
 		if len(actual) != len(data.expected) {
 			test.Errorf("parser.Test_prepareLicenseNotice: actual len != expected len:\n\t%d != %d\n", len(actual), len(data.expected))
@@ -35,24 +49,28 @@ func Test_prepareLicenseNotice(test *testing.T) {
 	}
 }
 
-var Test_transformDataErrLicenseNotFound = []struct {
+var Test_prepareLicenseNoticeErrLicenseNotFound_Data = []struct {
 	content  []byte
 	cfg      Config
 	expected error
 }{
 	{
-		content:  []byte("package main\n\nfunc main() {\n\n}"),
+		content: []byte("package main\n\nfunc main() {\n\n}"),
 		cfg: Config{
-			License:  "some-unknown-license",
-			Authors:   []string{"John Smith"},
-			Years:     []string{"2010"},
+			License: "some-unknown-license",
+			Authors: []Author{
+				{
+					Name: "John Smith",
+					Year: "2010",
+				},
+			},
 		},
 		expected: ErrLicenseNotFound,
 	},
 }
 
 func Test_prepareLicenseNoticeErrLicenseNotFound(test *testing.T) {
-	for _, data := range Test_transformDataErrLicenseNotFound {
+	for _, data := range Test_prepareLicenseNoticeErrLicenseNotFound_Data {
 		_, err := prepareLicenseNotice(data.cfg)
 		if err != data.expected {
 			test.Errorf("parser.Test_transformErrLicenseNotFound: actual != expected:\n\t%s != %s\n", err, data.expected)
@@ -60,15 +78,14 @@ func Test_prepareLicenseNoticeErrLicenseNotFound(test *testing.T) {
 	}
 }
 
-var Test_parseConfigData = struct {
+var Test_parseConfig_Data = struct {
 	input    []byte
 	expected Config
 }{
 	input: []byte(`
 authors:
-  - John Smith
-years:
-  - 2018
+  - name: John Smith
+    year: 2018
 program_name: Skynet
 paths:
   - parser/...
@@ -82,8 +99,12 @@ add_license_file: true
 add_license_notice: true
 `),
 	expected: Config{
-		Authors:              []string{"John Smith"},
-		Years:                []string{"2018"},
+		Authors: []Author{
+			{
+				Name: "John Smith",
+				Year: "2018",
+			},
+		},
 		ProgramName:         "Skynet",
 		Paths:               []string{"parser/...", "generator/...", "execute.go", "main.go"},
 		License:             "apache-v2",
@@ -95,7 +116,7 @@ add_license_notice: true
 }
 
 func Test_parseConfig(test *testing.T) {
-	data := Test_parseConfigData
+	data := Test_parseConfig_Data
 	actual, _ := parseConfig(data.input)
 	if len(actual.Authors) != len(data.expected.Authors) {
 		test.Errorf("parser.Test_parseConfig: actual != expected:\n\t%d != %d\n", len(actual.Authors), len(data.expected.Authors))
@@ -105,12 +126,15 @@ func Test_parseConfig(test *testing.T) {
 			test.Errorf("parser.Test_parseConfig: actual != expected:\n\t%s != %s\n", author, data.expected.Authors[i])
 		}
 	}
-	if len(actual.Years) != len(data.expected.Years) {
-		test.Errorf("parser.Test_parseConfig: actual != expected:\n\t%d != %d\n", len(actual.Years), len(data.expected.Years))
+	if len(actual.Authors) != len(data.expected.Authors) {
+		test.Errorf("parser.Test_parseConfig: actual != expected:\n\t%d != %d\n", len(actual.Authors), len(data.expected.Authors))
 	}
-	for i, year := range actual.Years {
-		if year != data.expected.Years[i] {
-			test.Errorf("parser.Test_parseConfig: actual != expected:\n\t%s != %s\n", year, data.expected.Years[i])
+	for i, author := range actual.Authors {
+		if author.Name != data.expected.Authors[i].Name {
+			test.Errorf("parser.Test_parseConfig: actual != expected:\n\t%s != %s\n", author.Name, data.expected.Authors[i].Name)
+		}
+		if author.Year != data.expected.Authors[i].Year {
+			test.Errorf("parser.Test_parseConfig: actual != expected:\n\t%s != %s\n", author.Year, data.expected.Authors[i].Year)
 		}
 	}
 	if actual.ProgramName != data.expected.ProgramName {
