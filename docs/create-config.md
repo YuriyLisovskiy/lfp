@@ -1,49 +1,51 @@
 ## Configuration keywords explained here
 
-Currently [lfp](https://github.com/YuriyLisovskiy/lfp) supports only yaml config file format.
+Currently [LFP](https://github.com/YuriyLisovskiy/lfp) supports only yaml config file format.
+    
+>*See license requirements for filed necessity. The default license notice template
+requires <years>, <authors> and <license> fields.
 
 Create a file, for example [`config.yml`](../sample/config.yml).
-> Keywords can be added in any other order. 
+> Keywords can be added in any other order.
 
 Program's name (some licenses require program name, see license 
-requirements [here](licenses.md)). If this field are not provided program name 
-will be set to the project root directory name, **_optional_**:
+requirements [here](licenses.md)). If this field is not provided, program name 
+will be set to the project root directory name **_optional_**:
 ```yaml
 program_name: Skynet
 ```
 
 The program's name and a brief idea of what it does (some licenses require program description
-instead of the program name, see license requirements [here](licenses.md)), **_optional_** if
-chosen license does not require this:
+instead of the program name, see license requirements [here](licenses.md))*:
 ```yaml
 program_description: Sowftware 'Skynet' is developed for human extermination (nope)
 ```
 
-Name(s) of a project's author(s), **_required_**:
+Name(s) of a project's author(s)*:
 ```yaml
 authors:
   - John Smith
   - Clint Eastwood
 ```
 
-Year(s) when sources were developed, **_required_**:
+Year(s) when sources were developed*:
 ```yaml
 years:
   - 2000-2001
 ```
 
-License type, the list of licenses marking is available [here](licenses.md), **_required_**:
+License type, the list of licenses marking is available [here](licenses.md)*:
 ```yaml
 license: agpl-3.0
 ```
 
-Set up project root path, **_required_**:
+Set up project root path*:
 ```yaml
 project_root: /home/root/projects/skynet
 ```
 
 Set up path(s) to file(s) that need to be licensed, `folder/...` means "include all 
-children from the `folder` directory", **_required_**:
+children from the `folder` directory"*:
 ```yaml
 paths:
   - parser/...
