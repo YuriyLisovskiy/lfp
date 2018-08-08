@@ -24,7 +24,7 @@ sudo tar -xvzf ~/Downloads/<version>.tar.gz -C /usr/local/bin/
 If you have already installed LFP tool of version at least 1.0.2-stable, run the next
 command to get update:
 ```bash
-sudo lfp --update-latest
+sudo lfp --update latest
 ```
 Ensure that LFP have been updated:
 ```bash
