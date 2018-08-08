@@ -2,11 +2,13 @@
 // Distributed under the MIT software license, see the accompanying
 // file LICENSE or https://opensource.org/licenses/MIT
 
-package main
+package scripts
 
 import (
 	"runtime"
 	"os/exec"
+	"bytes"
+	"fmt"
 )
 
 func main() {
@@ -17,5 +19,11 @@ func main() {
 		binary += ".exe"
 	default:
 	}
-	exec.Command("go", "build", "-o", "bin/" + binary, "main.go").Run()
+	cmd := exec.Command("go", "build", "-o", "bin/" + binary, "main.go")
+	var out bytes.Buffer
+	cmd.Stderr = &out
+	cmd.Run()
+	if out.String() != "" {
+		fmt.Println(out.String())
+	}
 }

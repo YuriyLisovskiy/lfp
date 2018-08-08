@@ -7,8 +7,8 @@ package main
 import (
 	"log"
 
-	"github.com/YuriyLisovskiy/lfp/src/lfp"
-)
+	lfp "github.com/YuriyLisovskiy/lfp/src"
+				)
 
 func main() {
 	if err := lfp.RunCLI(); err != nil {
