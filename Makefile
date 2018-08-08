@@ -8,7 +8,6 @@ PACKAGES = ./src
 COVER = coverage.out
 COVER_REPORT = coverage.html
 PREFIX = /usr/local/bin/lfp
-OPT = /opt/lfp/lfp
 TARGET = ./bin/lfp
 
 all: clean build
@@ -19,18 +18,16 @@ clean:
 
 install:
 	@echo Installing lfp...
-	@sudo mkdir -p /opt/lfp
-	@sudo cp -r $(TARGET) $(OPT)
-	@sudo ln -sf $(OPT) $(PREFIX)
+	@sudo cp $(TARGET) $(PREFIX)
 	@echo Done.
 
 uninstall:
 	@echo Uninstalling lfp...
-	@sudo rm -rf $(PREFIX_LINUX)
+	@sudo rm -rf $(PREFIX)
 	@echo Done.
 
 build:
-	@bash ./build/build.sh
+	@bash ./scripts/build.sh
 
 coverage: test
 	@echo Generating coverage report...

@@ -15,7 +15,7 @@ const (
 	VERSION      = "1.0.1-beta"
 	ABOUT        = PROGRAM_NAME + " " + VERSION + "\n\n" +
 		"A utility for licensing the project\n" +
-		"Yuriy Lisovskiy (c) 2018 <https://github.com/YuriyLisovskiy>\n\n"
+		"Copyright (c) 2018 Yuriy Lisovskiy, <https://github.com/YuriyLisovskiy>\n\n"
 )
 
 // verCheckCh is channel which gets latest.Response

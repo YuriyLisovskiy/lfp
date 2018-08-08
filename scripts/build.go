@@ -2,13 +2,13 @@
 // Distributed under the MIT software license, see the accompanying
 // file LICENSE or https://opensource.org/licenses/MIT
 
-package scripts
+package main
 
 import (
+	"fmt"
+	"bytes"
 	"runtime"
 	"os/exec"
-	"bytes"
-	"fmt"
 )
 
 func main() {
