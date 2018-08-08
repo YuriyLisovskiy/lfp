@@ -7,10 +7,11 @@ package lfp
 import "flag"
 
 var (
-	lfp        = flag.NewFlagSet("lfp", flag.ContinueOnError)
-	helpPtr    = lfp.Bool("help", false, "prints usage")
-	configPtr  = lfp.String("c", "", "set config path")
-	versionPtr = lfp.Bool("version", false, "prints version")
+	lfp         = flag.NewFlagSet("lfp", flag.ContinueOnError)
+	helpPtr     = lfp.Bool("help", false, "prints usage")
+	configPtr   = lfp.String("c", "", "set config path")
+	versionPtr  = lfp.Bool("version", false, "prints version")
+	licensesPtr = lfp.Bool("license", false, "prints a list of available licenses")
 )
 
 // validateArgs checks if args is correct.
@@ -21,8 +22,11 @@ func validateArgs(args []string) error {
 	if *versionPtr && len(args) > 2 {
 		return ErrTooManyArguments
 	}
+	if *licensesPtr && len(args) > 2 {
+		return ErrTooManyArguments
+	}
 	if *configPtr == "" {
-		if !*helpPtr && !*versionPtr {
+		if !*helpPtr && !*versionPtr && !*licensesPtr {
 			return ErrMissingConfigPath
 		}
 	}

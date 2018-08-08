@@ -4,17 +4,15 @@
 
 package updater
 
-import "os"
+import (
+	"os"
+	"fmt"
+)
 
 func RunCLI() error {
 	// if there are no arguments
 	if len(os.Args) == 1 {
 		print(about)
-		lfpUpdater.Usage()
-		return nil
-	}
-
-	if *helpPtr {
 		lfpUpdater.Usage()
 		return nil
 	}
@@ -29,7 +27,21 @@ func RunCLI() error {
 	if err := validateArgs(arguments); err != nil {
 		return err
 	}
-	return processUpdate()
+
+	if *helpPtr {
+		lfpUpdater.Usage()
+		return nil
+	}
+
+	if *versionPtr {
+		fmt.Printf("%s version %s\n", updater, version)
+		return nil
+	}
+
+	if *updatePtr != "" {
+		return processUpdate()
+	}
+	return nil
 }
 
 func processUpdate() error {

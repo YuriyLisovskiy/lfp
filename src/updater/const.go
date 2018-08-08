@@ -8,5 +8,8 @@ const (
 	repo    = "lfp"
 	author  = "YuriyLisovskiy"
 	updater = "LFP Updater"
-	about = ""
+	version = "1.0"
+	about        = updater + " " + version + "\n\n" +
+		"A utility for updating LFP tool\n" +
+		"Copyright (c) 2018 Yuriy Lisovskiy, <https://github.com/YuriyLisovskiy>\n\n"
 )

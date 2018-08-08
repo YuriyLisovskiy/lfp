@@ -8,10 +8,13 @@ import (
 	"os"
 	"fmt"
 	"time"
+	"bytes"
 	"errors"
+	"regexp"
 	"context"
 	"runtime"
 	"strings"
+	"os/exec"
 
 	"github.com/mholt/archiver"
 	"github.com/google/go-github/github"
@@ -73,9 +76,40 @@ func getReleaseUrl(version string) (string, error) {
 	url := ""
 	switch version {
 	case "latest":
+		latest := releases[0]
+
+		cmd := exec.Command("lfp", "--version")
+		var out, errOut bytes.Buffer
+		cmd.Stdout = &out
+		cmd.Stderr = &errOut
+		cmd.Run()
+		if errOut.String() != "" {
+			fmt.Println(errOut.String())
+		}
+
+		currentVersion := ""
+		rx, _ := regexp.Compile(`\d.\d.\d`)
+
+		split := strings.Split(out.String(), "\n")
+
+		if rx.MatchString(split[0]) {
+			currentVersion = rx.FindString(split[0])
+		} else {
+			return "", ErrCantRetrieveLfpVer
+		}
+
+		// Check if the newest version is already installed
+		if *latest.TagName == currentVersion {
+			return "", ErrTheLatestAlreadyInstalled
+		}
+
+		// Check if version is not greater than the latest release
+		if *latest.TagName < currentVersion {
+			return "", ErrLFPIsBroken
+		}
 
 		// Get latest release
-		url, err = chooseArchive(releases[0].Assets)
+		url, err = chooseArchive(latest.Assets)
 	default:
 		var targetRelease *github.RepositoryRelease = nil
 		version = strings.TrimPrefix(version, "v")

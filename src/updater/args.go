@@ -10,11 +10,17 @@ var (
 	lfpUpdater = flag.NewFlagSet("lfpupdater", flag.ContinueOnError)
 	updatePtr  = lfpUpdater.String("update", "", "update LFP tool")
 	helpPtr    = lfpUpdater.Bool("help", false, "print help")
+	versionPtr = lfpUpdater.Bool("version", false, "print version")
 )
 
 // validateArgs checks if args is correct.
 func validateArgs(args []string) error {
 	if *helpPtr {
+		if len(args) > 2 {
+			return ErrTooManyArguments
+		}
+	}
+	if *versionPtr {
 		if len(args) > 2 {
 			return ErrTooManyArguments
 		}

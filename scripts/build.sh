@@ -2,7 +2,7 @@
 
 if hash go 2>/dev/null
 then
-    echo Building the binary for target platform...
+    echo Building binaries for target platform...
 	go run ./scripts/build.go
     echo Done.
 else
