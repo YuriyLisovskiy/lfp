@@ -17,6 +17,7 @@ coverage.html
 
 # Local
 bin/
+release/
 *.yml
 !.travis.yml
 !sample/*

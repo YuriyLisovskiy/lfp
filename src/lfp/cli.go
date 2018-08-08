@@ -2,7 +2,7 @@
 // Distributed under the MIT software license, see the accompanying
 // file LICENSE or https://opensource.org/licenses/MIT
 
-package src
+package lfp
 
 import (
 	"os"
@@ -10,15 +10,14 @@ import (
 	"time"
 	"io/ioutil"
 
-	"github.com/YuriyLisovskiy/lfp/src/var"
-	"github.com/YuriyLisovskiy/lfp/src/updater"
+	"github.com/YuriyLisovskiy/lfp/src/config"
 )
 
 func RunCLI() error {
 
 	// if there are no arguments
 	if len(os.Args) == 1 {
-		print(_var.ABOUT)
+		print(config.ABOUT)
 		lfp.Usage()
 		return nil
 	}
@@ -34,10 +33,6 @@ func RunCLI() error {
 		return err
 	}
 
-	if *updatePtr != "" {
-		return processUpdate()
-	}
-
 	if *versionPtr {
 		return processVersion()
 	}
@@ -49,19 +44,15 @@ func RunCLI() error {
 	return processLicensing()
 }
 
-func processUpdate() error {
-	return updater.StartUpdate(*updatePtr)
-}
-
 func processVersion() error {
-	fmt.Printf("%s version %s\n", _var.PROGRAM_NAME, _var.VERSION)
+	fmt.Printf("%s version %s\n", config.PROGRAM_NAME, config.VERSION)
 	select {
-	case <-time.After(_var.CheckTimeout):
+	case <-time.After(checkTimeout):
 		// Do nothing
-	case res := <-_var.VerCheckCh:
+	case res := <-verCheckCh:
 		if res != nil {
 			fmt.Printf("Latest version of %s is %s, please update the %s tool\n",
-				_var.PROGRAM_NAME, res.Current, _var.PROGRAM_NAME,
+				config.PROGRAM_NAME, res.Current, config.PROGRAM_NAME,
 			)
 		}
 	}

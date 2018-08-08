@@ -2,16 +2,16 @@
 // Distributed under the MIT software license, see the accompanying
 // file LICENSE or https://opensource.org/licenses/MIT
 
-package src
+package lfp
 
 import (
 	"os"
 	"regexp"
 	"strings"
 
-	"github.com/YuriyLisovskiy/lfp/src/licenses"
-	"github.com/YuriyLisovskiy/lfp/src/licenses/bsd"
-	"github.com/YuriyLisovskiy/lfp/src/licenses/gnu"
+	"github.com/YuriyLisovskiy/lfp/src/lfp/licenses"
+	"github.com/YuriyLisovskiy/lfp/src/lfp/licenses/bsd"
+	"github.com/YuriyLisovskiy/lfp/src/lfp/licenses/gnu"
 )
 
 func getLicense(license string) (map[string]string, error) {

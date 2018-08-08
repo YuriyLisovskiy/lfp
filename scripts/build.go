@@ -7,19 +7,26 @@ package main
 import (
 	"fmt"
 	"bytes"
-	"runtime"
 	"os/exec"
+	"runtime"
 )
 
 func main() {
 	platform := runtime.GOOS
-	binary := "lfp"
+	binaryLfp := "lfp"
+	binaryUpdater := "lfp-updater"
 	switch platform {
 	case "windows":
-		binary += ".exe"
+		binaryLfp += ".exe"
+		binaryUpdater += ".exe"
 	default:
 	}
-	cmd := exec.Command("go", "build", "-o", "bin/" + binary, "main.go")
+	build("bin/" + binaryLfp, "./src/main-lfp.go")
+	build("bin/" + binaryUpdater, "./src/main-updater.go")
+}
+
+func build(destination, source string) {
+	cmd := exec.Command("go", "build", "-o", destination, source)
 	var out bytes.Buffer
 	cmd.Stderr = &out
 	cmd.Run()

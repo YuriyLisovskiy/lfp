@@ -2,7 +2,7 @@
 // Distributed under the MIT software license, see the accompanying
 // file LICENSE or https://opensource.org/licenses/MIT
 
-package src
+package updater
 
 import (
 	"os"
@@ -120,14 +120,15 @@ func installUpdate(path, exec string, start time.Time) error {
 	case "windows":
 		err := archiver.Zip.Open(path, exec)
 		if err != nil {
-			return errors.New(updater + ": error: opening downloaded archive with executable")
+			return errors.New(fmt.Sprintf(updater + ": error: opening downloaded archive with executable, %s", err))
 		}
 	case "linux":
 		err := archiver.TarGz.Open(path, exec)
 		if err != nil {
-			return errors.New(updater + ": error: opening downloaded archive with executable")
+			return errors.New(fmt.Sprintf(updater + ": error: opening downloaded archive with executable, %s", err))
 		}
 	}
 	elapsed := time.Since(start)
 	fmt.Printf(updater + ": LFP tool has been updated successfully, time elapsed: %d sec\n", int64(elapsed / time.Second))
+	return nil
 }
