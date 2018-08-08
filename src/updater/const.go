@@ -2,9 +2,11 @@
 // Distributed under the MIT software license, see the accompanying
 // file LICENSE or https://opensource.org/licenses/MIT
 
-package updater
+package src
 
 const (
-	repo   = "lfp"
-	author = "YuriyLisovskiy"
+	repo    = "lfp"
+	author  = "YuriyLisovskiy"
+	updater = "LFP Updater"
+	about = ""
 )

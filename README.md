@@ -20,29 +20,23 @@ Download an archive with the latest release manually
 ```bash
 sudo tar -xvzf ~/Downloads/<version>.tar.gz -C /usr/local/bin/
 ```
+You will get `lfp` and `lfp-updater` tools.
+`lfp-updater` is necessary to perform an updates of `lfp` tool.
 
-If you have already installed LFP tool of version at least 1.0.2-stable, run the next
-command to get update:
+If you have already installed LFP tool of version at least `1.0.3`, run the next
+command to get update, otherwise download and install it manually:
 ```bash
-sudo lfp --update latest
+sudo lfp-updater --update latest
 ```
 Ensure that LFP have been updated:
 ```bash
 lfp --version
 ```
 
-## Usage
+## Usage of lfp
 Add license to your project, see how to create config file [here](docs/create-config.md):
 ```bash
 lfp -c path/to/config/config.yml
-```
-Get the latest release:
-```bash
-sudo lfp --update latest
-```
-Get specific release version, for example 1.0.1-beta:
-```bash
-sudo lfp --update 1.0.1-beta
 ```
 Read usage:
 ```bash
@@ -51,6 +45,19 @@ lfp --help
 Check current version:
 ```bash
 lfp --version
+```
+### LFP Updater
+Get the latest release:
+```bash
+sudo lfp-updater --update latest
+```
+Get specific release version, for example 1.0.1-beta:
+```bash
+sudo lfp-updater --update 1.0.1-beta
+```
+Read usage:
+```bash
+lfp-updater --help
 ```
 
 ### Issues

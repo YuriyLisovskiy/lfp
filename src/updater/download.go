@@ -2,7 +2,7 @@
 // Distributed under the MIT software license, see the accompanying
 // file LICENSE or https://opensource.org/licenses/MIT
 
-package updater
+package src
 
 import (
 	"io"
@@ -54,14 +54,14 @@ func printDownloadPercent(done chan int64, path string, total int64) {
 		}
 		if stop {
 			printStatus(100)
-			println()
+			fmt.Println("\nDownload completed.")
 			break
 		}
 		time.Sleep(1 * time.Millisecond)
 	}
 }
 
-func DownloadFile(filePath string, url string) error {
+func downloadFile(filePath string, url string) error {
 	fmt.Printf("Downloading %s\n", url)
 
 	// Create the file
@@ -91,6 +91,5 @@ func DownloadFile(filePath string, url string) error {
 		return err
 	}
 	done <- written
-	fmt.Println("Download completed.")
 	return nil
 }

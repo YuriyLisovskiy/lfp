@@ -2,17 +2,23 @@
 // Distributed under the MIT software license, see the accompanying
 // file LICENSE or https://opensource.org/licenses/MIT
 
-package updater
+package src
 
 import (
+	"os"
+	"fmt"
+	"time"
+	"errors"
 	"context"
 	"runtime"
 	"strings"
 
+	"github.com/mholt/archiver"
 	"github.com/google/go-github/github"
 )
 
-func StartUpdate(version string) error {
+func startUpdate(version string) error {
+	start := time.Now()
 	downloadUrl, err := getReleaseUrl(version)
 	if err != nil {
 		return err
@@ -23,12 +29,21 @@ func StartUpdate(version string) error {
 		return err
 	}
 	path := cwd + "/" + split[len(split)-1]
-	err = DownloadFile(path, downloadUrl)
-	if err != nil {
-		return err
+
+	if _, err := os.Stat(path); err != nil {
+		if os.IsNotExist(err) {
+			err = downloadFile(path, downloadUrl)
+			if err != nil {
+				return err
+			}
+		}
 	}
-	startDaemon(path)
-	return nil
+	lfpLoc, err := os.Executable()
+	if err != nil {
+		return errors.New(updater + ": error: unable to get executable location")
+	}
+	split = strings.Split(lfpLoc, "/")
+	return installUpdate(path, strings.Join(split[:len(split)-1], "/"), start)
 }
 
 func getReleases() ([]*github.RepositoryRelease, error) {
@@ -95,4 +110,24 @@ func chooseArchive(assets []github.ReleaseAsset) (string, error) {
 		}
 	}
 	return "", ErrNoReleaseForTargetOs
+}
+
+// installUpdate installs downloaded update using daemon process
+func installUpdate(path, exec string, start time.Time) error {
+	fmt.Println("LFP Updater: Updating LFP tool...")
+	targetOs := runtime.GOOS
+	switch targetOs {
+	case "windows":
+		err := archiver.Zip.Open(path, exec)
+		if err != nil {
+			return errors.New(updater + ": error: opening downloaded archive with executable")
+		}
+	case "linux":
+		err := archiver.TarGz.Open(path, exec)
+		if err != nil {
+			return errors.New(updater + ": error: opening downloaded archive with executable")
+		}
+	}
+	elapsed := time.Since(start)
+	fmt.Printf(updater + ": LFP tool has been updated successfully, time elapsed: %d sec\n", int64(elapsed / time.Second))
 }
