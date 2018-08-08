@@ -4,7 +4,7 @@
 
 .PHONY: all clean install uninstall build coverage test
 
-PACKAGES = ./src/lfp
+PACKAGES = ./src
 COVER = coverage.out
 COVER_REPORT = coverage.html
 PREFIX = /usr/local/bin/lfp

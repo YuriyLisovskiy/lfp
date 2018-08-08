@@ -14,7 +14,7 @@ const (
 	PROGRAM_NAME = "lfp"
 	VERSION      = "1.0.1-beta"
 	ABOUT        = PROGRAM_NAME + " " + VERSION + "\n\n" +
-		"A utility for licensing existing project\n" +
+		"A utility for licensing the project\n" +
 		"Yuriy Lisovskiy (c) 2018 <https://github.com/YuriyLisovskiy>\n\n"
 )
 

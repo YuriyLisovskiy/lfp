@@ -13,6 +13,46 @@ and use it in your project.
 
 Read [docs](docs) for more details.
 
+## Download/Update and Install
+Download an archive with the latest release manually
+[here](https://github.com/YuriyLisovskiy/lfp/releases)   
+
+```bash
+sudo tar -xvzf ~/Downloads/<version>.tar.gz -C /usr/local/bin/
+```
+
+If you have already installed LFP tool of version at least 1.0.2-stable, run the next
+command to get update:
+```bash
+sudo lfp --update-latest
+```
+Ensure that LFP have been updated:
+```bash
+lfp --version
+```
+
+## Usage
+Add license to your project, see how to create config file [here](docs/create-config.md):
+```bash
+lfp -c path/to/config/config.yml
+```
+Get the latest release:
+```bash
+sudo lfp --update latest
+```
+Get specific release version, for example 1.0.1-beta:
+```bash
+sudo lfp --update 1.0.1-beta
+```
+Read usage:
+```bash
+lfp --help
+```
+Check current version:
+```bash
+lfp --version
+```
+
 ### Issues
 Read [issue template](.github/ISSUE_TEMPLATE.md) before opening a new issue.
 
