@@ -4,11 +4,13 @@
 
 .PHONY: all clean install uninstall build coverage test
 
-PACKAGES = ./src
+PACKAGES = ./src/lfp
 COVER = coverage.out
 COVER_REPORT = coverage.html
 PREFIX = /usr/local/bin/lfp
+PREFIX_UPD = /usr/local/bin/lfp-updater
 TARGET = ./bin/lfp
+TARGET_UPD = ./bin/lfp-updater
 
 all: clean build
 
@@ -19,11 +21,13 @@ clean:
 install:
 	@echo Installing lfp...
 	@sudo cp $(TARGET) $(PREFIX)
+	@sudo cp $(TARGET_UPD) $(PREFIX_UPD)
 	@echo Done.
 
 uninstall:
 	@echo Uninstalling lfp...
 	@sudo rm -rf $(PREFIX)
+	@sudo rm -rf $(PREFIX_UPD)
 	@echo Done.
 
 build:
