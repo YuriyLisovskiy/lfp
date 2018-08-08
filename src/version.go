@@ -5,24 +5,9 @@
 package src
 
 import (
-	"time"
-
 	"github.com/tcnksm/go-latest"
+	"github.com/YuriyLisovskiy/lfp/src/var"
 )
-
-const (
-	PROGRAM_NAME = "lfp"
-	VERSION      = "1.0.1-beta"
-	ABOUT        = PROGRAM_NAME + " " + VERSION + "\n\n" +
-		"A utility for licensing the project\n" +
-		"Copyright (c) 2018 Yuriy Lisovskiy, <https://github.com/YuriyLisovskiy>\n\n"
-)
-
-// verCheckCh is channel which gets latest.Response
-var verCheckCh = make(chan *latest.CheckResponse)
-
-// CheckTimeout is default timeout of latest.Check execution.
-var CheckTimeout = 2 * time.Second
 
 func init() {
 	go func() {
@@ -32,9 +17,9 @@ func init() {
 		}
 
 		// Ignore error, because it's not important
-		res, _ := latest.Check(githubTag, VERSION)
-		if res.Current != VERSION {
-			verCheckCh <- res
+		res, _ := latest.Check(githubTag, _var.VERSION)
+		if res.Current > _var.VERSION {
+			_var.VerCheckCh <- res
 		}
 	}()
 }

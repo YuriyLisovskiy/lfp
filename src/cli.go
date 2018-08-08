@@ -9,13 +9,16 @@ import (
 	"fmt"
 	"time"
 	"io/ioutil"
+
+	"github.com/YuriyLisovskiy/lfp/src/var"
+	"github.com/YuriyLisovskiy/lfp/src/updater"
 )
 
 func RunCLI() error {
 
 	// if there are no arguments
 	if len(os.Args) == 1 {
-		print(ABOUT)
+		print(_var.ABOUT)
 		lfp.Usage()
 		return nil
 	}
@@ -31,48 +34,66 @@ func RunCLI() error {
 		return err
 	}
 
+	if *updatePtr != "" {
+		return processUpdate()
+	}
+
 	if *versionPtr {
-		fmt.Printf("%s version %s\n", PROGRAM_NAME, VERSION)
-		select {
-		case <-time.After(CheckTimeout):
-			// Do nothing
-		case res := <-verCheckCh:
-			if res != nil {
-				fmt.Printf("Latest version of %s is %s, please update the %s tool\n",
-					PROGRAM_NAME, res.Current, PROGRAM_NAME,
-				)
-			}
-		}
-		return nil
-	} else if *helpPtr {
+		return processVersion()
+	}
+
+	if *helpPtr {
 		lfp.Usage()
-	} else {
+		return nil
+	}
+	return processLicensing()
+}
 
-		// read and parse config file
-		cfgData, err := ioutil.ReadFile(*configPtr)
-		if err != nil {
-			return err
-		}
-		cfg, err := parseConfig(cfgData)
-		if err != nil {
-			return err
-		}
+func processUpdate() error {
+	return updater.StartUpdate(*updatePtr)
+}
 
-		// validate and normalize configuration
-		err = cfg.validate()
-		if err != nil {
-			return err
+func processVersion() error {
+	fmt.Printf("%s version %s\n", _var.PROGRAM_NAME, _var.VERSION)
+	select {
+	case <-time.After(_var.CheckTimeout):
+		// Do nothing
+	case res := <-_var.VerCheckCh:
+		if res != nil {
+			fmt.Printf("Latest version of %s is %s, please update the %s tool\n",
+				_var.PROGRAM_NAME, res.Current, _var.PROGRAM_NAME,
+			)
 		}
-		cfg, err = cfg.normalize()
-		if err != nil {
-			return err
-		}
+	}
+	return nil
+}
 
-		// run main process
-		err = process(cfg)
-		if err != nil {
-			return err
-		}
+func processLicensing() error {
+
+	// read and parse config file
+	cfgData, err := ioutil.ReadFile(*configPtr)
+	if err != nil {
+		return err
+	}
+	cfg, err := parseConfig(cfgData)
+	if err != nil {
+		return err
+	}
+
+	// validate and normalize configuration
+	err = cfg.validate()
+	if err != nil {
+		return err
+	}
+	cfg, err = cfg.normalize()
+	if err != nil {
+		return err
+	}
+
+	// run main process
+	err = process(cfg)
+	if err != nil {
+		return err
 	}
 	return nil
 }

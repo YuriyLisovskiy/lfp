@@ -7,19 +7,23 @@ package src
 import "flag"
 
 var (
-	lfp       = flag.NewFlagSet("lfp", flag.ContinueOnError)
+	lfp        = flag.NewFlagSet("lfp", flag.ContinueOnError)
 	helpPtr    = lfp.Bool("help", false, "prints usage")
 	configPtr  = lfp.String("c", "", "set config path")
 	versionPtr = lfp.Bool("version", false, "prints version")
+	updatePtr  = lfp.String("update", "", "update LFP tool")
 )
 
 // validateArgs checks if args is correct.
 func validateArgs(args []string) error {
 	if *helpPtr && len(args) > 2 {
-		return ErrHelpRedundantArgs
+		return ErrTooManyArguments
 	}
 	if *versionPtr && len(args) > 2 {
-		return ErrVersionRedundantArgs
+		return ErrTooManyArguments
+	}
+	if *updatePtr != "" && len(args) > 2 {
+		return ErrTooManyArguments
 	}
 	if *configPtr == "" && !*helpPtr && !*versionPtr {
 		return ErrMissingConfigPath
