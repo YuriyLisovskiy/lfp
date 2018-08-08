@@ -2,7 +2,7 @@
 // Distributed under the MIT software license, see the accompanying
 // file LICENSE or https://opensource.org/licenses/MIT
 
-package lfp
+package src
 
 import "errors"
 
@@ -11,8 +11,8 @@ var (
 	ConfigErrAuthorRequired               = errors.New(PROGRAM_NAME + " error: author required")
 	ConfigErrPathsRequired                = errors.New(PROGRAM_NAME + " error: path(s) required")
 	ConfigErrLicenseRequired              = errors.New(PROGRAM_NAME + " error: license required")
-	ConfigErrProjectRootRequired          = errors.New(PROGRAM_NAME + " error: project root required")
 	ConfigErrYearsAuthors                 = errors.New(PROGRAM_NAME + " error: year and(or) author is empty")
+	ErrCantRetrieveUserName               = errors.New(PROGRAM_NAME + " error: can't get user name for licensing")
 	ConfigErrAddLicenseFileNoticeRequired = errors.New(PROGRAM_NAME + " error: license file option of license notice option required")
 
 	// Other errors

@@ -2,9 +2,16 @@
 // Distributed under the MIT software license, see the accompanying
 // file LICENSE or https://opensource.org/licenses/MIT
 
-package lfp
+package src
 
-import "strings"
+import (
+	"os"
+	"time"
+	"strconv"
+	"strings"
+	"os/user"
+	"path/filepath"
+)
 
 type Author struct {
 	Name string `yaml:"name"`
@@ -42,16 +49,10 @@ type Config struct {
 }
 
 func (cfg Config) validate() error {
-	if len(cfg.Authors) == 0 {
-		return ConfigErrAuthorRequired
-	}
 	for _, author := range cfg.Authors {
 		if author.Name == "" || author.Year == "" {
 			return ConfigErrYearsAuthors
 		}
-	}
-	if len(cfg.Paths) == 0 {
-		return ConfigErrPathsRequired
 	}
 	if cfg.License == "" {
 		return ConfigErrLicenseRequired
@@ -77,7 +78,26 @@ func (cfg Config) normalize() (Config, error) {
 		cfg.ProgramName = cfg.ProjectRoot[strings.LastIndexByte(cfg.ProjectRoot, byte('/'))+1:]
 	}
 	if cfg.ProjectRoot == "" {
-		cfg.ProjectRoot = "./"
+		dir, err := filepath.Abs(filepath.Dir(os.Args[0]))
+		if err != nil {
+			return Config{}, err
+		}
+		cfg.ProjectRoot = dir
+	}
+	if len(cfg.Paths) == 0 {
+		dir := ""
+		if !strings.HasSuffix(cfg.ProjectRoot, "/") {
+			dir += "/"
+		}
+		cfg.Paths = append(cfg.Paths, dir + "...")
+	}
+	if len(cfg.Authors) == 0 {
+		usr, err := user.Current()
+		if err != nil {
+			return Config{}, ErrCantRetrieveUserName
+		}
+		currentTime := time.Now()
+		cfg.Authors = append(cfg.Authors, Author{Name: usr.Name, Year: strconv.Itoa(currentTime.Year())})
 	}
 	var err error
 	for i, path := range cfg.Paths {

@@ -2,14 +2,14 @@
 // Distributed under the MIT software license, see the accompanying
 // file LICENSE or https://opensource.org/licenses/MIT
 
-package lfp
+package src
 
 import "flag"
 
 var (
 	lfp       = flag.NewFlagSet("lfp", flag.ContinueOnError)
 	helpPtr    = lfp.Bool("help", false, "prints usage")
-	configPtr  = lfp.String("config", "", "set config path")
+	configPtr  = lfp.String("c", "", "set config path")
 	versionPtr = lfp.Bool("version", false, "prints version")
 )
 

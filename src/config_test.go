@@ -2,7 +2,7 @@
 // Distributed under the MIT software license, see the accompanying
 // file LICENSE or https://opensource.org/licenses/MIT
 
-package lfp
+package src
 
 import "testing"
 
@@ -148,23 +148,6 @@ var Test_validate_ErrData = []struct {
 }{
 	{
 		cfg: Config{
-			Authors:     []Author{},
-			ProgramName: "some program",
-			Paths: []string{
-				"test/...",
-				"some/",
-				"./dir/...",
-			},
-			License:             "apache-v2",
-			AddLicenseFile:      true,
-			AddLicenseNotice:    false,
-			ProjectRoot:         "/home/root/path/to/project/some_program",
-			CustomLicenseNotice: "",
-		},
-		expected: ConfigErrAuthorRequired,
-	},
-	{
-		cfg: Config{
 			Authors:     []Author{
 				{
 					"John Smith",
@@ -210,23 +193,6 @@ var Test_validate_ErrData = []struct {
 			CustomLicenseNotice: "",
 		},
 		expected: ConfigErrYearsAuthors,
-	},
-	{
-		cfg: Config{
-			Authors:     []Author{
-				{
-					"John Smith",
-					"2010",
-				},
-			},
-			ProgramName:         "some program",
-			License:             "apache-v2",
-			AddLicenseFile:      true,
-			AddLicenseNotice:    false,
-			ProjectRoot:         "/home/root/path/to/project/some_program",
-			CustomLicenseNotice: "",
-		},
-		expected: ConfigErrPathsRequired,
 	},
 	{
 		cfg: Config{

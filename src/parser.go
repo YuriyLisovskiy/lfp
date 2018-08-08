@@ -2,7 +2,7 @@
 // Distributed under the MIT software license, see the accompanying
 // file LICENSE or https://opensource.org/licenses/MIT
 
-package lfp
+package src
 
 import (
 	"fmt"
@@ -46,7 +46,11 @@ func process(cfg Config) error {
 
 				// If not then create one more and add it to map
 				licenseNotice, err := prepareLicenseNotice(cfg, ext)
-				if err != nil {
+
+				// If comment was not found, ignore this file
+				if err == ErrCommentNotFound {
+					continue
+				} else if err != nil {
 					return err
 				}
 				notices[ext] = licenseNotice

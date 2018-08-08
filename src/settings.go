@@ -4,6 +4,6 @@
 
 // TODO: set to false in production!
 
-package lfp
+package src
 
 var DEBUG = false

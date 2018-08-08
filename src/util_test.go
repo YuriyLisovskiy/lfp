@@ -2,14 +2,14 @@
 // Distributed under the MIT software license, see the accompanying
 // file LICENSE or https://opensource.org/licenses/MIT
 
-package lfp
+package src
 
 import (
 	"testing"
 
-	"github.com/YuriyLisovskiy/lfp/src/lfp/licenses"
-	"github.com/YuriyLisovskiy/lfp/src/lfp/licenses/bsd"
-	"github.com/YuriyLisovskiy/lfp/src/lfp/licenses/gnu"
+	"github.com/YuriyLisovskiy/lfp/src/licenses"
+	"github.com/YuriyLisovskiy/lfp/src/licenses/bsd"
+	"github.com/YuriyLisovskiy/lfp/src/licenses/gnu"
 )
 
 var Test_getLicenseData = []struct {
