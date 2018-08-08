@@ -10,10 +10,9 @@ import (
 	"io/ioutil"
 
 	"gopkg.in/yaml.v2"
-	"github.com/YuriyLisovskiy/lfp/src/static"
 )
 
-func processPaths(cfg Config) error {
+func process(cfg Config) error {
 	if cfg.AddLicenseNotice {
 
 		// parse all paths and its children if specified
@@ -126,7 +125,7 @@ func prepareLicenseNotice(cfg Config, ext string) (ret []byte, err error) {
 		}
 		template = string(templateBytes[:])
 	} else {
-		header := static.LICENSE_NOTICE_TEMPLATE["head"]
+		header := LICENSE_NOTICE_TEMPLATE["head"]
 		for i := range cfg.Authors {
 			if commentStart != "" && commentEnd != "" && i != 0 {
 				header = strings.Replace(header, "<comment>", "", 1)
@@ -137,9 +136,9 @@ func prepareLicenseNotice(cfg Config, ext string) (ret []byte, err error) {
 			}
 		}
 		if commentStart != "" && commentEnd != "" {
-			template += static.LICENSE_NOTICE_TEMPLATE["body-mlc"]
+			template += LICENSE_NOTICE_TEMPLATE["body-mlc"]
 		} else {
-			template += static.LICENSE_NOTICE_TEMPLATE["body-slc"]
+			template += LICENSE_NOTICE_TEMPLATE["body-slc"]
 		}
 	}
 	license, err := getLicense(cfg.License)

@@ -6,16 +6,16 @@ package src
 
 import (
 	"os"
+	"fmt"
+	"time"
 	"io/ioutil"
-
-	"github.com/YuriyLisovskiy/lfp/src/static"
 )
 
 func RunCLI() error {
 
 	// if there are no arguments
 	if len(os.Args) == 1 {
-		print(static.ABOUT)
+		print(ABOUT)
 		lfp.Usage()
 		return nil
 	}
@@ -32,7 +32,18 @@ func RunCLI() error {
 	}
 
 	if *versionPtr {
-		println(static.VERSION)
+		fmt.Printf("%s version %s\n", PROGRAM_NAME, VERSION)
+		select {
+		case <-time.After(CheckTimeout):
+			// Do nothing
+		case res := <-verCheckCh:
+			if res != nil {
+				fmt.Printf("Latest version of %s is %s, please update the %s tool\n",
+					PROGRAM_NAME, res.Current, PROGRAM_NAME,
+				)
+			}
+		}
+		return nil
 	} else if *helpPtr {
 		lfp.Usage()
 	} else {
@@ -58,7 +69,7 @@ func RunCLI() error {
 		}
 
 		// run main process
-		err = processPaths(cfg)
+		err = process(cfg)
 		if err != nil {
 			return err
 		}
