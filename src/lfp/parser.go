@@ -2,7 +2,7 @@
 // Distributed under the MIT software license, see the accompanying
 // file LICENSE or https://opensource.org/licenses/MIT
 
-package src
+package lfp
 
 import (
 	"fmt"
@@ -13,9 +13,15 @@ import (
 )
 
 func process(cfg Config) error {
+
+	// Check if at least one of license file or license option was provided
+	if !cfg.AddLicenseFile && !cfg.AddLicenseNotice {
+		return ConfigErrAddLicenseFileNoticeRequired
+	}
+
 	if cfg.AddLicenseNotice {
 
-		// parse all paths and its children if specified
+		// Parse all paths and its children if specified
 		var paths []string
 		for _, path := range cfg.Paths {
 			subPaths, err := parsePath(cfg.ProjectRoot + "/" + path)

@@ -2,7 +2,7 @@
 // Distributed under the MIT software license, see the accompanying
 // file LICENSE or https://opensource.org/licenses/MIT
 
-package src
+package lfp
 
 import "strings"
 
@@ -56,12 +56,6 @@ func (cfg Config) validate() error {
 	if cfg.License == "" {
 		return ConfigErrLicenseRequired
 	}
-	if cfg.ProjectRoot == "" {
-		return ConfigErrProjectRootRequired
-	}
-	if !cfg.AddLicenseFile && !cfg.AddLicenseNotice {
-		return ConfigErrAddLicenseFileNoticeRequired
-	}
 	return nil
 }
 
@@ -81,6 +75,9 @@ func (cfg Config) normalize() (Config, error) {
 	}
 	if cfg.ProgramName == "" {
 		cfg.ProgramName = cfg.ProjectRoot[strings.LastIndexByte(cfg.ProjectRoot, byte('/'))+1:]
+	}
+	if cfg.ProjectRoot == "" {
+		cfg.ProjectRoot = "./"
 	}
 	var err error
 	for i, path := range cfg.Paths {

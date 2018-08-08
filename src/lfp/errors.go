@@ -2,7 +2,7 @@
 // Distributed under the MIT software license, see the accompanying
 // file LICENSE or https://opensource.org/licenses/MIT
 
-package src
+package lfp
 
 import "errors"
 
@@ -16,8 +16,8 @@ var (
 	ConfigErrAddLicenseFileNoticeRequired = errors.New(PROGRAM_NAME + " error: license file option of license notice option required")
 
 	// Other errors
-	ErrCommentNotFound      = errors.New("comment not found")
 	ErrIndexOutOfRange      = errors.New("error: index out of range")
+	ErrCommentNotFound      = errors.New(PROGRAM_NAME + " error: comment not found")
 	ErrLicenseNotFound      = errors.New(PROGRAM_NAME + " error: license not found")
 	ErrPathDoesNotExist     = errors.New(PROGRAM_NAME + " error: path does not exist")
 	ErrMissingConfigPath    = errors.New(PROGRAM_NAME + " error: missing config path")

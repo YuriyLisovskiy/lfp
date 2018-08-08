@@ -2,7 +2,7 @@
 // Distributed under the MIT software license, see the accompanying
 // file LICENSE or https://opensource.org/licenses/MIT
 
-package src
+package lfp
 
 import "testing"
 
@@ -248,47 +248,6 @@ var Test_validate_ErrData = []struct {
 			CustomLicenseNotice: "",
 		},
 		expected: ConfigErrLicenseRequired,
-	},
-	{
-		cfg: Config{
-			Authors:     []Author{
-				{
-					"John Smith",
-					"2010",
-				},
-			},
-			ProgramName: "some program",
-			Paths: []string{
-				"test/...",
-				"some/",
-				"./dir/...",
-			},
-			License:             "apache-v2",
-			AddLicenseFile:      true,
-			AddLicenseNotice:    false,
-			CustomLicenseNotice: "",
-		},
-		expected: ConfigErrProjectRootRequired,
-	},
-	{
-		cfg: Config{
-			Authors:     []Author{
-				{
-					"John Smith",
-					"2010",
-				},
-			},
-			ProgramName: "some program",
-			Paths: []string{
-				"test/...",
-				"some/",
-				"./dir/...",
-			},
-			License:             "apache-v2",
-			ProjectRoot:         "/home/root/path/to/project/some_program",
-			CustomLicenseNotice: "",
-		},
-		expected: ConfigErrAddLicenseFileNoticeRequired,
 	},
 }
 

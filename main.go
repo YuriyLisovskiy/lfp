@@ -7,12 +7,12 @@ package main
 import (
 	"log"
 
-	"github.com/YuriyLisovskiy/lfp/src"
+	"github.com/YuriyLisovskiy/lfp/src/lfp"
 )
 
 func main() {
-	if err := src.RunCLI(); err != nil {
-		if src.DEBUG {
+	if err := lfp.RunCLI(); err != nil {
+		if lfp.DEBUG {
 			log.Panic(err)
 		} else {
 			log.Println(err)
