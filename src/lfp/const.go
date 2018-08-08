@@ -6,7 +6,7 @@ package lfp
 
 const (
 	PROGRAM_NAME = "lfp"
-	VERSION      = "1.0.1"
+	VERSION      = "1.0.3"
 	ABOUT        = PROGRAM_NAME + " " + VERSION + "\n\n" +
 		"A utility for licensing the project\n" +
 		"Copyright (c) 2018 Yuriy Lisovskiy, <https://github.com/YuriyLisovskiy>\n\n"
