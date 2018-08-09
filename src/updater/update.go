@@ -88,7 +88,7 @@ func getReleaseUrl(version string) (string, error) {
 		}
 
 		currentVersion := ""
-		rx, _ := regexp.Compile(`\d.\d.\d`)
+		rx, _ := regexp.Compile(`\d\.\d\.\d`)
 
 		split := strings.Split(out.String(), "\n")
 
@@ -130,16 +130,16 @@ func getReleaseUrl(version string) (string, error) {
 	return url, err
 }
 
+// chooseArchive searches for a suitable archive according to target operating system
 func chooseArchive(assets []github.ReleaseAsset) (string, error) {
 
 	// Get target operating system and architecture for retrieving a suitable url
-	targetOs := runtime.GOOS
-	targetArch := runtime.GOARCH
+	rx, _ := regexp.Compile(fmt.Sprintf(`lfp-%s-%s-\d\.\d\.\d\.(zip|tar\.gz)`, runtime.GOOS, runtime.GOARCH))
 
 	// Try to get suitable url
 	for _, asset := range assets {
 		url := *asset.BrowserDownloadURL
-		if strings.Contains(url, targetOs) && strings.Contains(url, targetArch) {
+		if rx.MatchString(url) {
 			return url, nil
 		}
 	}
