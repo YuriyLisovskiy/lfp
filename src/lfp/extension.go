@@ -56,10 +56,9 @@ func getExtension(path string) string {
 	ext := path
 	pos := strings.LastIndex(path, ".")
 	if pos != -1 {
-		if strings.ContainsRune(path, '/') {
+		ext = path[pos+1:]
+		if strings.ContainsRune(ext, '/') {
 			ext = path[strings.LastIndex(path, "/")+1:]
-		} else {
-			ext = path[pos+1:]
 		}
 	} else {
 		pos = strings.LastIndex(path, "/")
