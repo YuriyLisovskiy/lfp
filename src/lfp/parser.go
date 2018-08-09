@@ -49,6 +49,7 @@ func process(cfg Config) error {
 
 				// If comment was not found, ignore this file
 				if err == ErrCommentNotFound {
+					println(PROGRAM_NAME + ": info: file/extension " + ext + " is not supported")
 					continue
 				} else if err != nil {
 					return err

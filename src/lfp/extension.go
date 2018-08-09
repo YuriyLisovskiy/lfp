@@ -6,6 +6,7 @@ package lfp
 
 import "strings"
 
+// Returns a pair of comments for given extension
 func getComments(ext string) (string, string, error) {
 	ext = strings.ToLower(ext)
 	switch ext {
@@ -20,7 +21,7 @@ func getComments(ext string) (string, string, error) {
 		"rmd", "md", "handlebars", "hbs", "xml", "polly", "cshtml", "rhtml":
 		return "<!--", "-->", nil
 	case "yaml", "yml", "pm", "t", "pod", "pl", "rdata", "rds", "rda", "r", "s", "asm", "makefile", "in", "awk",
-		"sh", "csh", "nim", "sls", "tcl", "toml", "py", "rb", "coffee", "jl", "nix", "arr", "tf":
+		"sh", "csh", "nim", "sls", "tcl", "toml", "py", "rb", "coffee", "jl", "nix", "arr", "tf", "Makefile", "MAKEFILE":
 		return "#", "", nil
 	case "lhs", "hs", "adb", "ads", "lagda", "agda", "lidr", "idr", "hlean", "lean", "sql", "lua":
 		return "--", "", nil
@@ -48,15 +49,23 @@ func getComments(ext string) (string, string, error) {
 	return "", "", ErrCommentNotFound
 }
 
+// Retrieves an extension from file path.
+//
+// If file has no extension, cuts path and returns file name
 func getExtension(path string) string {
+	ext := path
 	pos := strings.LastIndex(path, ".")
-	if pos == -1 {
-		pos = strings.LastIndex(path, "/")
-		if pos != -1 {
-			return path[pos+1:]
+	if pos != -1 {
+		if strings.ContainsRune(path, '/') {
+			ext = path[strings.LastIndex(path, "/")+1:]
+		} else {
+			ext = path[pos+1:]
 		}
 	} else {
-		return path[pos+1:]
+		pos = strings.LastIndex(path, "/")
+		if pos != -1 {
+			ext = path[pos+1:]
+		}
 	}
-	return path
+	return ext
 }
