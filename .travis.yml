@@ -16,7 +16,8 @@ before_script:
   - echo $GOPATH
   - go version
   - go env
-  - go get -v -t ./src/...
+  - go get -v -t ./src/updater/...
+  - go get -v -t ./src/lfp/...
 
 script:
   - make test
