@@ -2,7 +2,6 @@
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT)
 [![Language](https://img.shields.io/badge/Go-v1.8-blue.svg)](https://golang.org/)
 [![Build Status](https://travis-ci.org/YuriyLisovskiy/lfp.svg?branch=master)](https://travis-ci.org/YuriyLisovskiy/lfp)
-[![Project Status](https://img.shields.io/badge/status-development-red.svg)](https://travis-ci.org/YuriyLisovskiy/lfp)
 
 [LFP](https://github.com/YuriyLisovskiy/lfp) - tool which can help you to create the license and license notice for
 every file in the project.
