@@ -78,6 +78,11 @@ Read [contributing](.github/CONTRIBUTING.md) docs before opening new pull reques
 ### Author
 * [Yuriy Lisovskiy](https://github.com/YuriyLisovskiy)
 
+#### Donations
+* Bitcoin: `1KfafTH4fSodRHw6Lc9nnGs58sibXrYEv7`
+* Ether: `0x53c554400ca9d6dd5c56739c27bd79fd14fca851`
+* Bitcoin Cash: `qrxtu27d9me0h3336yjcqjw6fz9g3esley8cf09ylc`
+
 ### License
 [LFP](https://github.com/YuriyLisovskiy/lfp) is licensed under the terms of the
 [MIT](https://opensource.org/licenses/MIT) software license, see the [LICENSE](LICENSE) file for more information.
