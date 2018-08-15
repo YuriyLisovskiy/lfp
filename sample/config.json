@@ -1,0 +1,25 @@
+{
+  "program_name": "Skynet",
+  "program_description": "Software 'Skynet' is developed for human extermination (nope)",
+  "authors": [
+    {
+      "name": "John Smith",
+      "year": "2000"
+    },
+    {
+      "name": "Clint Eastwood",
+      "year": "2001"
+    }
+  ],
+  "license": "agpl-3.0",
+  "paths": [
+    "parser/...",
+    "ai/...",
+    "execute.c",
+    "main.c"
+  ],
+  "custom_license_notice": "/home/root/notices/license_notice_for_skynet.txt",
+  "project_root": "/home/root/projects/skynet",
+  "add_license_file": false,
+  "add_license_notice": true
+}

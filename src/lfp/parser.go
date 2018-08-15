@@ -10,6 +10,9 @@ import (
 	"io/ioutil"
 
 	"gopkg.in/yaml.v2"
+	"encoding/json"
+	"encoding/xml"
+	"errors"
 )
 
 func process(cfg Config) error {
@@ -79,8 +82,17 @@ func process(cfg Config) error {
 }
 
 // parseConfig parses given configuration data
-func parseConfig(data []byte) (cfg Config, err error) {
-	err = yaml.Unmarshal(data, &cfg)
+func parseConfig(data []byte, cfgFile string) (cfg Config, err error) {
+	switch strings.ToLower(cfgFile) {
+	case "yml", "yaml":
+		err = yaml.Unmarshal(data, &cfg)
+	case "json":
+		err = json.Unmarshal(data, &cfg)
+	case "xml":
+		err = xml.Unmarshal(data, &cfg)
+	default:
+		err = errors.New("invalid config file")
+	}
 	return
 }
 

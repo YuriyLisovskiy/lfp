@@ -14,38 +14,38 @@ import (
 )
 
 type Author struct {
-	Name string `yaml:"name"`
-	Year string `yaml:"year"`
+	Name string `yaml:"name" json:"name" xml:"Name"`
+	Year string `yaml:"year" json:"year" xml:"Year"`
 }
 
 // Configuration for licensing the project, see sample/sample.yml
 type Config struct {
 	// Author
-	Authors []Author `yaml:"authors"`
+	Authors []Author `yaml:"authors" json:"authors" xml:"Authors>Author"`
 
 	// Program name
-	ProgramName string `yaml:"program_name"`
+	ProgramName string `yaml:"program_name" json:"program_name" xml:"ProgramName"`
 
 	// Short description of the program
-	ProgramDescription string `yaml:"program_description"`
+	ProgramDescription string `yaml:"program_description" json:"program_description" xml:"ProgramDescription"`
 
 	// Paths to add license notice
-	Paths []string `yaml:"paths"`
+	Paths []string `yaml:"paths" json:"paths" xml:"Paths>Path"`
 
 	// License name, see docs/licenses.md for details.
-	License string `yaml:"license"`
+	License string `yaml:"license" json:"license" xml:"License"`
 
 	// An absolute project root path.
-	ProjectRoot string `yaml:"project_root"`
+	ProjectRoot string `yaml:"project_root" json:"project_root" xml:"ProjectRoot"`
 
 	// Create custom license notice.
-	CustomLicenseNotice string `yaml:"custom_license_notice"`
+	CustomLicenseNotice string `yaml:"custom_license_notice" json:"custom_license_notice" xml:"CustomLicenseNotice"`
 
 	// Add LICENSE file to project root.
-	AddLicenseFile bool `yaml:"add_license_file"`
+	AddLicenseFile bool `yaml:"add_license_file" json:"add_license_file" xml:"AddLicenseFile"`
 
 	// Add license notice to every specified path.
-	AddLicenseNotice bool `yaml:"add_license_notice"`
+	AddLicenseNotice bool `yaml:"add_license_notice" json:"add_license_notice" xml:"AddLicenseNotice"`
 }
 
 func (cfg Config) validate() error {
@@ -89,7 +89,7 @@ func (cfg Config) normalize() (Config, error) {
 		if !strings.HasSuffix(cfg.ProjectRoot, "/") {
 			dir += "/"
 		}
-		cfg.Paths = append(cfg.Paths, dir + "...")
+		cfg.Paths = append(cfg.Paths, dir+"...")
 	}
 	if len(cfg.Authors) == 0 {
 		usr, err := user.Current()

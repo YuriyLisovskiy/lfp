@@ -69,7 +69,7 @@ func processLicensing() error {
 	if err != nil {
 		return err
 	}
-	cfg, err := parseConfig(cfgData)
+	cfg, err := parseConfig(cfgData, getExtension(*configPtr))
 	if err != nil {
 		return err
 	}

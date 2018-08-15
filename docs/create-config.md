@@ -1,6 +1,7 @@
 ## Configuration keywords explained here
 
-Currently [LFP](https://github.com/YuriyLisovskiy/lfp) supports only yaml config file format.
+[LFP](https://github.com/YuriyLisovskiy/lfp) supports `yaml`, `json` and `xml` config file formats.
+See [examples](../sample).
     
 > *See license requirements for filed necessity. The default license notice template
 requires `years`, `authors` and `license` fields.
