@@ -9,42 +9,12 @@ import (
 	"regexp"
 	"strings"
 
-	"github.com/YuriyLisovskiy/lfp/src/lfp/licenses"
-	"github.com/YuriyLisovskiy/lfp/src/lfp/licenses/bsd"
-	"github.com/YuriyLisovskiy/lfp/src/lfp/licenses/gnu"
+	"github.com/YuriyLisovskiy/licenses/api/golang"
 )
 
-func getLicense(license string) (map[string]string, error) {
-	var res map[string]string
-	switch license {
-	case "apache-2.0":
-		res = licenses.APACHE_LICENSE_2_0
-	case "bsd-2-clause":
-		res = bsd.BSD_2_CLAUSE_LICENSE
-	case "bsd-3-clause":
-		res = bsd.BSD_3_CLAUSE_LICENSE
-	case "epl-2.0":
-		res = licenses.ECLIPSE_PUBLIC_LICENSE_V2_0
-	case "gpl-2.0":
-		res = gnu.GNU_GPL_V2_0
-	case "gpl-3.0":
-		res = gnu.GNU_GPL_V3_0
-	case "agpl-3.0":
-		res = gnu.GNU_AFFERO_GPL_V_3
-	case "lgpl-2.1":
-		res = gnu.GNU_LESSER_GPL_V2_1
-	case "lgpl-3.0":
-		res = gnu.GNU_LESSER_GPL_V3
-	case "mit":
-		res = licenses.MIT_LICENSE
-	case "mpl-2.0":
-		res = licenses.MOZILLA_PUBLIC_LICENSE_V2
-	case "unlicense":
-		res = licenses.UNLICENSE
-	default:
-		return map[string]string{}, ErrLicenseNotFound
-	}
-	return res, nil
+func getLicense(license string) (golang.License, error) {
+	client := golang.Client{}
+	return client.GetLicense(license)
 }
 
 // createLicenseFile generates license from a template
@@ -67,7 +37,7 @@ func createLicenseFile(cfg Config) ([]byte, error) {
 	if err != nil {
 		return ret, err
 	}
-	licenseContent := license["text"]
+	licenseContent := license.Content()
 	switch cfg.License {
 	case "apache-2.0", "mit", "bsd-2-clause", "bsd-3-clause":
 		licenseContent, err = prepareLicense(licenseContent, cfg.Authors, map[string]string{})

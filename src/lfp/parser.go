@@ -169,14 +169,14 @@ func prepareLicenseNotice(cfg Config, ext string) (ret []byte, err error) {
 		return
 	}
 	if cfg.License == "unlicense" {
-		ret = []byte(fmt.Sprintf("// Unlicense, see the accompanying file LICENSE or %s\n\n", license["link"]))
+		ret = []byte(fmt.Sprintf("// Unlicense, see the accompanying file LICENSE or %s\n\n", license.Link()))
 	} else {
 
 		// Set license name
-		retStr := strings.Replace(template, "<license name>", license["name"], -1)
+		retStr := strings.Replace(template, "<license name>", license.Name(), -1)
 
 		// Set license link
-		retStr = strings.Replace(retStr, "<license link>", license["link"], -1)
+		retStr = strings.Replace(retStr, "<license link>", license.Link(), -1)
 
 		// Set authors
 		for _, author := range cfg.Authors {

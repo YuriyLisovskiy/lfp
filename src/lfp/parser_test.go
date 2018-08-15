@@ -80,7 +80,6 @@ var Test_prepareLicenseNoticeErrLicenseNotFound_Data = []struct {
 	content  []byte
 	cfg      Config
 	ext      string
-	expected error
 }{
 	{
 		content: []byte("package main\n\nfunc main() {\n\n}"),
@@ -94,12 +93,11 @@ var Test_prepareLicenseNoticeErrLicenseNotFound_Data = []struct {
 			},
 		},
 		ext:      "go",
-		expected: ErrLicenseNotFound,
 	},
 	{
 		content: []byte("package main\n\nfunc main() {\n\n}"),
 		cfg: Config{
-			License: "some-unknown-license",
+			License: "apache-2.0",
 			Authors: []Author{
 				{
 					Name: "John Smith",
@@ -108,15 +106,14 @@ var Test_prepareLicenseNoticeErrLicenseNotFound_Data = []struct {
 			},
 		},
 		ext:      "some-ext",
-		expected: ErrCommentNotFound,
 	},
 }
 
 func Test_prepareLicenseNoticeErrLicenseNotFound(test *testing.T) {
 	for _, data := range Test_prepareLicenseNoticeErrLicenseNotFound_Data {
 		_, err := prepareLicenseNotice(data.cfg, data.ext)
-		if err != data.expected {
-			test.Errorf("parser.Test_transformErrLicenseNotFound: actual != expected:\n\t%s != %s\n", err, data.expected)
+		if err == nil {
+			test.Errorf("parser.Test_transformErrLicenseNotFound: func does not return an error")
 		}
 	}
 }
