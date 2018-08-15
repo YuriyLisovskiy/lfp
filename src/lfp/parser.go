@@ -6,13 +6,13 @@ package lfp
 
 import (
 	"fmt"
+	"errors"
 	"strings"
 	"io/ioutil"
-
-	"gopkg.in/yaml.v2"
-	"encoding/json"
 	"encoding/xml"
-	"errors"
+	"encoding/json"
+	
+	"gopkg.in/yaml.v2"
 )
 
 func process(cfg Config) error {
