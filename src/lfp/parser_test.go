@@ -1,4 +1,5 @@
 // Copyright (c) 2018 Yuriy Lisovskiy
+//
 // Distributed under the MIT software license, see the accompanying
 // file LICENSE or https://opensource.org/licenses/MIT
 
@@ -28,10 +29,11 @@ var Test_prepareLicenseNoticeData = []struct {
 		},
 		ext: "cpp",
 		expected: []byte(
-			`//  Copyright (c) 2010 John Smith
-//  Copyright (c) 2011 John Smith 2
-//  Distributed under the MIT License,
-//  see the accompanying file LICENSE or https://opensource.org/licenses/MIT
+			`// Copyright (c) 2010 John Smith
+// Copyright (c) 2011 John Smith 2
+// 
+// Distributed under the MIT License,
+// see the accompanying file LICENSE or https://opensource.org/licenses/MIT
 
 `),
 	},
@@ -52,10 +54,11 @@ var Test_prepareLicenseNoticeData = []struct {
 		ext: "html",
 		expected: []byte(
 			`<!--
-  Copyright (c) 2010 John Smith
-  Copyright (c) 2011 John Smith 2
-  Distributed under the MIT License,
-  see the accompanying file LICENSE or https://opensource.org/licenses/MIT
+ Copyright (c) 2010 John Smith
+ Copyright (c) 2011 John Smith 2
+ 
+ Distributed under the MIT License,
+ see the accompanying file LICENSE or https://opensource.org/licenses/MIT
 -->
 
 `),
@@ -109,11 +112,14 @@ var Test_prepareLicenseNoticeErrLicenseNotFound_Data = []struct {
 	},
 }
 
-func Test_prepareLicenseNoticeErrLicenseNotFound(test *testing.T) {
+func Test_prepareLicenseNoticeErr(test *testing.T) {
 	for _, data := range Test_prepareLicenseNoticeErrLicenseNotFound_Data {
 		_, err := prepareLicenseNotice(data.cfg, data.ext)
 		if err == nil {
-			test.Errorf("parser.Test_transformErrLicenseNotFound: func does not return an error")
+			test.Errorf(
+				"parser.Test_prepareLicenseNoticeErr: func does not return an error for input %s",
+				data.cfg.License,
+			)
 		}
 	}
 }

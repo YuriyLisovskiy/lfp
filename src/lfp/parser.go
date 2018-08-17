@@ -1,4 +1,5 @@
 // Copyright (c) 2018 Yuriy Lisovskiy
+//
 // Distributed under the MIT software license, see the accompanying
 // file LICENSE or https://opensource.org/licenses/MIT
 
@@ -7,12 +8,14 @@ package lfp
 import (
 	"fmt"
 	"errors"
+	"regexp"
 	"strings"
 	"io/ioutil"
 	"encoding/xml"
 	"encoding/json"
 	
 	"gopkg.in/yaml.v2"
+	"github.com/YuriyLisovskiy/licenses/api/golang"
 )
 
 func process(cfg Config) error {
@@ -136,34 +139,42 @@ func parsePath(path string) ([]string, error) {
 
 // prepareLicenseNotice create license notice from given template
 func prepareLicenseNotice(cfg Config, ext string) (ret []byte, err error) {
-	var template string
-	commentStart, commentEnd, err := getComments(ext)
-	if err != nil {
-		return []byte{}, err
-	}
+	noticeTemplate := getNotice(cfg.License)
 	if cfg.CustomLicenseNotice != "" {
 		templateBytes, err := ioutil.ReadFile(cfg.CustomLicenseNotice)
 		if err != nil {
 			return []byte{}, err
 		}
-		template = string(templateBytes[:])
-	} else {
-		header := LICENSE_NOTICE_TEMPLATE["head"]
+		noticeTemplate = string(templateBytes[:])
+	}
+	crRegex, _ := regexp.Compile(`{{.+}}`)
+	loc := crRegex.FindStringIndex(noticeTemplate)
+	template := ""
+	if loc != nil {
+		header := crRegex.FindString(noticeTemplate)
 		for i := range cfg.Authors {
-			if commentStart != "" && commentEnd != "" && i != 0 {
-				header = strings.Replace(header, "<comment>", "", 1)
-			}
 			template += header
 			if i < len(cfg.Authors)-1 {
 				template += "\n"
 			}
 		}
-		if commentStart != "" && commentEnd != "" {
-			template += LICENSE_NOTICE_TEMPLATE["body-mlc"]
-		} else {
-			template += LICENSE_NOTICE_TEMPLATE["body-slc"]
-		}
 	}
+	start := noticeTemplate[:loc[0]]
+	if start == "\n" {
+		start = ""
+	}
+	template = start + template + noticeTemplate[loc[1]:]
+	commentStart, commentEnd, err := getComments(ext)
+	if err != nil {
+		return
+	}
+	template = shift(template, " ")
+	if commentStart != "" && commentEnd != "" {
+		template = "<comment>\n" + template + "\n<comment>"
+	} else {
+		template = "<comment>" + strings.Replace(template, "\n", "\n<comment>", -1)
+	}
+	template = strings.Replace(strings.Replace(template, "{", "", -1), "}", "", -1) + "\n\n"
 	license, err := getLicense(cfg.License)
 	if err != nil {
 		return
@@ -171,37 +182,49 @@ func prepareLicenseNotice(cfg Config, ext string) (ret []byte, err error) {
 	if cfg.License == "unlicense" {
 		ret = []byte(fmt.Sprintf("// Unlicense, see the accompanying file LICENSE or %s\n\n", license.Link()))
 	} else {
-
-		// Set license name
-		retStr := strings.Replace(template, "<license name>", license.Name(), -1)
-
-		// Set license link
-		retStr = strings.Replace(retStr, "<license link>", license.Link(), -1)
-
-		// Set authors
-		for _, author := range cfg.Authors {
-			retStr = strings.Replace(retStr, "<author>", author.Name, 1)
-			retStr = strings.Replace(retStr, "<year>", author.Year, 1)
-		}
-
-		// Set comments
-		if commentStart != "" && commentEnd != "" {
-			retStr = strings.Replace(retStr, "<comment>", commentStart + "\n", 1)
-			retStr = strings.Replace(retStr, "<comment>", commentEnd, 1)
-		} else {
-			retStr = strings.Replace(retStr, "<comment>", commentStart, -1)
-		}
-
-		// Set other fields if custom license notice template is provided
-		if cfg.CustomLicenseNotice != "" {
-
-			// Set program name
-			retStr = strings.Replace(retStr, "<program name>", cfg.ProgramName, -1)
-
-			// Set program description
-			retStr = strings.Replace(retStr, "<program description>", cfg.ProgramDescription, -1)
-		}
-		ret = []byte(retStr)
+		ret = []byte(replaceKeys(template, license, cfg, commentStart, commentEnd))
 	}
 	return
+}
+
+func getNotice(license string) string {
+	client := golang.Client{}
+	notice, err := client.GetHeader(license)
+	if err != nil {
+		return LICENSE_NOTICE_TEMPLATE
+	}
+	return notice
+}
+
+func replaceKeys(template string, license golang.License, cfg Config, cStart, cEnd string) string {
+	// Set license name
+	retStr := strings.Replace(template, "<license name>", license.Name(), -1)
+
+	// Set license link
+	retStr = strings.Replace(retStr, "<license link>", license.Link(), -1)
+
+	// Set authors
+	for _, author := range cfg.Authors {
+		retStr = strings.Replace(retStr, "<author>", author.Name, 1)
+		retStr = strings.Replace(retStr, "<year>", author.Year, 1)
+	}
+
+	// Set comments
+	if cStart != "" && cEnd != "" {
+		retStr = strings.Replace(retStr, "<comment>", cStart, 1)
+		retStr = strings.Replace(retStr, "<comment>", cEnd, 1)
+	} else {
+		retStr = strings.Replace(retStr, "<comment>", cStart, -1)
+	}
+
+	// Set other fields if custom license notice template is provided
+	if cfg.CustomLicenseNotice != "" {
+
+		// Set program name
+		retStr = strings.Replace(retStr, "<program name>", cfg.ProgramName, -1)
+
+		// Set program description
+		retStr = strings.Replace(retStr, "<program description>", cfg.ProgramDescription, -1)
+	}
+	return retStr
 }

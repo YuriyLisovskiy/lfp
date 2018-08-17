@@ -1,4 +1,5 @@
 // Copyright (c) 2018 Yuriy Lisovskiy
+//
 // Distributed under the MIT software license, see the accompanying
 // file LICENSE or https://opensource.org/licenses/MIT
 
@@ -23,10 +24,11 @@ func init() {
 			Repository: "lfp",
 		}
 
-		// Ignore error, because it's not important
-		res, _ := latest.Check(githubTag, VERSION)
-		if res.Current > VERSION {
-			verCheckCh <- res
+		res, err := latest.Check(githubTag, VERSION)
+		if err == nil {
+			if res.Current > VERSION {
+				verCheckCh <- res
+			}
 		}
 	}()
 }

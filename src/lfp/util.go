@@ -1,4 +1,5 @@
 // Copyright (c) 2018 Yuriy Lisovskiy
+//
 // Distributed under the MIT software license, see the accompanying
 // file LICENSE or https://opensource.org/licenses/MIT
 
@@ -138,4 +139,9 @@ func isFile(path string) bool {
 		return true
 	}
 	return info.Mode().IsRegular()
+}
+
+func shift(str, indent string) string {
+	ret := strings.Replace(str, "\n", "\n" + indent, -1)
+	return indent + ret
 }
