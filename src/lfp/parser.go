@@ -159,6 +159,7 @@ func prepareLicenseNotice(cfg Config, ext string) (ret []byte, err error) {
 			}
 		}
 	}
+	fmt.Println(noticeTemplate)
 	start := noticeTemplate[:loc[0]]
 	if start == "\n" {
 		start = ""
@@ -205,8 +206,12 @@ func replaceKeys(template string, license golang.License, cfg Config, cStart, cE
 
 	// Set authors
 	for _, author := range cfg.Authors {
-		retStr = strings.Replace(retStr, "<author>", author.Name, 1)
-		retStr = strings.Replace(retStr, "<year>", author.Year, 1)
+		if author.Name != "" {
+			retStr = strings.Replace(retStr, "<author>", author.Name, 1)
+		}
+		if author.Year != "" {
+			retStr = strings.Replace(retStr, "<year>", author.Year, 1)
+		}
 	}
 
 	// Set comments
@@ -217,13 +222,13 @@ func replaceKeys(template string, license golang.License, cfg Config, cStart, cE
 		retStr = strings.Replace(retStr, "<comment>", cStart, -1)
 	}
 
-	// Set other fields if custom license notice template is provided
-	if cfg.CustomLicenseNotice != "" {
-
-		// Set program name
+	// Set program name
+	if cfg.ProgramName != "" {
 		retStr = strings.Replace(retStr, "<program name>", cfg.ProgramName, -1)
+	}
 
-		// Set program description
+	// Set program description
+	if cfg.ProgramDescription != "" {
 		retStr = strings.Replace(retStr, "<program description>", cfg.ProgramDescription, -1)
 	}
 	return retStr
