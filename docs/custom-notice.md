@@ -7,22 +7,13 @@ will be added to all files, provided in `paths` field in configuration file.
 This is the default license notice which will be used if `custom_license_notice` field
 is not provided:
 
-* Notice with single-line comments*
+* Notice template*
 ```text
-<comment>  Copyright (c) <year> <author>
-<comment>  Distributed under the <license name>,
-<comment>  see the accompanying file LICENSE or <license link>
-```
-* Notice template with multi-line comments*:
-```text
-<comment>
-   Copyright (c) <year> <author>
-   Distributed under the <license name>,
-   see the accompanying file LICENSE or <license link>
-<comment>
-```
+{{Copyright (c) <year> <author>}}
 
-> *Some languages does not support single-line comments.
+Distributed under the <license name>,
+see the accompanying file LICENSE or <license link>
+```
 
 ##### List of available keywords:
 * `<year>`

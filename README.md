@@ -6,7 +6,7 @@
 [LFP](https://github.com/YuriyLisovskiy/lfp) - tool which can help you to create the license and license notice for
 every file in the project.
 
-Currently it supports only built-in open source licenses, see [licenses](docs/licenses.md)
+It supports open source licenses, see [licenses](https://github.com/YuriyLisovskiy/licenses/blob/master/README.md#available-licenses)
 for details. Using this tool you can create your own license notice template as described [here](docs/custom-notice.md),
 and use it in your project.
 

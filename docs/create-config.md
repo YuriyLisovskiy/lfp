@@ -10,14 +10,14 @@ Create a file, for example [`config.yml`](../sample/config.yml).
 > Keywords can be added in any other order.
 
 Program's name (some licenses require program name, see license 
-requirements [here](licenses.md)). If this field is not provided, program name 
+requirements [here](https://github.com/YuriyLisovskiy/licenses/blob/master/README.md#available-licenses)). If this field is not provided, program name 
 will be set to the project root directory name, **_optional_**:
 ```yaml
 program_name: Skynet
 ```
 
 The program's name and a brief idea of what it does (some licenses require program description
-instead of the program name, see license requirements [here](licenses.md))*:
+instead of the program name, see license requirements [here](https://github.com/YuriyLisovskiy/licenses/blob/master/README.md#available-licenses))*:
 ```yaml
 program_description: Sowftware 'Skynet' is developed for human extermination (nope)
 ```
@@ -33,7 +33,7 @@ authors:
     year: 2001
 ```
 
-License type, the list of licenses marking is available [here](licenses.md), **_required_**:
+License type, the list of licenses marking is available [here](https://github.com/YuriyLisovskiy/licenses/blob/master/README.md#available-licenses), **_required_**:
 ```yaml
 license: agpl-3.0
 ```
