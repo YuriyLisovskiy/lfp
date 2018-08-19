@@ -138,7 +138,7 @@ func parsePath(path string) ([]string, error) {
 }
 
 // prepareLicenseNotice create license notice from given template.
-func prepareLicenseNotice(cfg Config, ext string) (ret []byte, err error) {
+func prepareLicenseNotice(cfg Config, ext string) ([]byte, error) {
 	noticeTemplate := getNotice(cfg.License)
 	if cfg.CustomLicenseNotice != "" {
 		templateBytes, err := ioutil.ReadFile(cfg.CustomLicenseNotice)
@@ -166,7 +166,7 @@ func prepareLicenseNotice(cfg Config, ext string) (ret []byte, err error) {
 	template = start + template + noticeTemplate[loc[1]:]
 	commentStart, commentEnd, err := getComments(ext)
 	if err != nil {
-		return
+		return []byte{}, err
 	}
 	template = shift(template, " ")
 	if commentStart != "" && commentEnd != "" {
@@ -177,14 +177,15 @@ func prepareLicenseNotice(cfg Config, ext string) (ret []byte, err error) {
 	template = strings.Replace(strings.Replace(template, "{", "", -1), "}", "", -1) + "\n\n"
 	license, err := getLicense(cfg.License)
 	if err != nil {
-		return
+		return []byte{}, err
 	}
+	var ret []byte
 	if cfg.License == "unlicense" {
 		ret = []byte(fmt.Sprintf("// Unlicense, see the accompanying file LICENSE or %s\n\n", license.Link()))
 	} else {
 		ret = []byte(replaceKeys(template, license, cfg, commentStart, commentEnd))
 	}
-	return
+	return ret, nil
 }
 
 // getNotice downloads license notice, if the notice does not exist, returns
