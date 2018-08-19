@@ -192,7 +192,7 @@ func prepareLicenseNotice(cfg Config, ext string) (ret []byte, err error) {
 func getNotice(license string) string {
 	client := golang.Client{}
 	notice, err := client.GetHeader(license)
-	if err != nil {
+	if err != nil || len(notice) == 0 {
 		return LICENSE_NOTICE_TEMPLATE
 	}
 	return notice
