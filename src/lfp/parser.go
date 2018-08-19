@@ -159,7 +159,6 @@ func prepareLicenseNotice(cfg Config, ext string) (ret []byte, err error) {
 			}
 		}
 	}
-	fmt.Println(noticeTemplate)
 	start := noticeTemplate[:loc[0]]
 	if start == "\n" {
 		start = ""
