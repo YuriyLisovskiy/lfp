@@ -5,6 +5,8 @@
 
 package lfp
 
+// Default license notice template, used if given license template does not exist
+// on https://github.com/YuriyLisovskiy/licenses repository.
 var LICENSE_NOTICE_TEMPLATE =
 `{{Copyright (c) <year> <author>}}
 

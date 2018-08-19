@@ -13,12 +13,14 @@ import (
 	"github.com/YuriyLisovskiy/licenses/api/golang"
 )
 
+// getLicense downloads license template from
+// https://github.com/YuriyLisovskiy/licenses repository.
 func getLicense(license string) (golang.License, error) {
 	client := golang.Client{}
 	return client.GetLicense(license)
 }
 
-// createLicenseFile generates license from a template
+// createLicenseFile generates license from a template.
 func createLicenseFile(cfg Config) ([]byte, error) {
 	var ret []byte
 	path := cfg.ProjectRoot + "/LICENSE"
@@ -60,7 +62,7 @@ func createLicenseFile(cfg Config) ([]byte, error) {
 	return ret, nil
 }
 
-// prepareLicense replaces all given keywords to actual data
+// prepareLicense replaces all given keywords to actual data.
 func prepareLicense(template string, authors []Author, data map[string]string) (string, error) {
 	ret := template
 	for key, value := range data {
@@ -80,7 +82,8 @@ func prepareLicense(template string, authors []Author, data map[string]string) (
 	return ret, nil
 }
 
-// findIndentReverse searches for an indent at the end of template fragment before header template
+// findIndentReverse searches for an indent at the end of template
+// fragment before header template.
 func findIndentReverse(templateFragment string) string {
 	indent := ""
 	start := len(templateFragment)-1
@@ -95,7 +98,7 @@ func findIndentReverse(templateFragment string) string {
 	return indent
 }
 
-// processHeader aggregates headers from a template for all given authors
+// processHeader aggregates headers from a template for all given authors.
 func processHeader(header string, authors []Author, indent string) string {
 	header = strings.Replace(header, "{", "", -1)
 	header = strings.Replace(header, "}", "", -1)
@@ -114,6 +117,7 @@ func processHeader(header string, authors []Author, indent string) string {
 	return ret
 }
 
+// pathExists checks if given path exists.
 func pathExists(path string) (bool, error) {
 	_, err := os.Stat(path)
 	if err == nil {
@@ -125,6 +129,7 @@ func pathExists(path string) (bool, error) {
 	return true, err
 }
 
+// isDir checks if given path is directory.
 func isDir(path string) bool {
 	info, err := os.Stat(path)
 	if err != nil {
@@ -133,6 +138,7 @@ func isDir(path string) bool {
 	return info.Mode().IsDir()
 }
 
+// isFile checks if given path is file.
 func isFile(path string) bool {
 	info, err := os.Stat(path)
 	if err != nil {
@@ -141,6 +147,7 @@ func isFile(path string) bool {
 	return info.Mode().IsRegular()
 }
 
+// shift adds indents after '\n' character.
 func shift(str, indent string) string {
 	ret := strings.Replace(str, "\n", "\n" + indent, -1)
 	return indent + ret

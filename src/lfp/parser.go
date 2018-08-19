@@ -84,7 +84,7 @@ func process(cfg Config) error {
 	return nil
 }
 
-// parseConfig parses given configuration data
+// parseConfig parses given configuration data.
 func parseConfig(data []byte, cfgFile string) (cfg Config, err error) {
 	switch strings.ToLower(cfgFile) {
 	case "yml", "yaml":
@@ -137,7 +137,7 @@ func parsePath(path string) ([]string, error) {
 	return ret, nil
 }
 
-// prepareLicenseNotice create license notice from given template
+// prepareLicenseNotice create license notice from given template.
 func prepareLicenseNotice(cfg Config, ext string) (ret []byte, err error) {
 	noticeTemplate := getNotice(cfg.License)
 	if cfg.CustomLicenseNotice != "" {
@@ -187,6 +187,8 @@ func prepareLicenseNotice(cfg Config, ext string) (ret []byte, err error) {
 	return
 }
 
+// getNotice downloads license notice, if the notice does not exist, returns
+// default license notice.
 func getNotice(license string) string {
 	client := golang.Client{}
 	notice, err := client.GetHeader(license)
@@ -196,6 +198,7 @@ func getNotice(license string) string {
 	return notice
 }
 
+// replaceKeys replaces template keywords by an actual data.
 func replaceKeys(template string, license golang.License, cfg Config, cStart, cEnd string) string {
 	// Set license name
 	retStr := strings.Replace(template, "<license name>", license.Name(), -1)

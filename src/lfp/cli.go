@@ -9,6 +9,7 @@ import (
 	"fmt"
 	"time"
 	"io/ioutil"
+	"github.com/YuriyLisovskiy/licenses/api/golang"
 )
 
 func RunCLI() error {
@@ -95,6 +96,11 @@ func processLicensing() error {
 }
 
 func processLicenseHelp() error {
-	fmt.Print(LICENSE_HELP)
+	client := golang.Client{}
+	list, err := client.GetList()
+	if err != nil {
+		return err
+	}
+	fmt.Print("			Available Licenses\n" + list + "\n")
 	return nil
 }
