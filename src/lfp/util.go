@@ -10,13 +10,13 @@ import (
 	"regexp"
 	"strings"
 
-	"github.com/YuriyLisovskiy/licenses/api/golang"
+	"github.com/YuriyLisovskiy/licenses/api/go"
 )
 
 // getLicense downloads license template from
 // https://github.com/YuriyLisovskiy/licenses repository.
-func getLicense(license string) (golang.License, error) {
-	client := golang.Client{}
+func getLicense(license string) (oslapi.License, error) {
+	client := oslapi.Client{}
 	return client.GetLicense(license)
 }
 

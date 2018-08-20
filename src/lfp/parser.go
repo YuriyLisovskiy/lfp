@@ -15,7 +15,7 @@ import (
 	"encoding/json"
 	
 	"gopkg.in/yaml.v2"
-	"github.com/YuriyLisovskiy/licenses/api/golang"
+	"github.com/YuriyLisovskiy/licenses/api/go"
 )
 
 func process(cfg Config) error {
@@ -191,7 +191,7 @@ func prepareLicenseNotice(cfg Config, ext string) ([]byte, error) {
 // getNotice downloads license notice, if the notice does not exist, returns
 // default license notice.
 func getNotice(license string) string {
-	client := golang.Client{}
+	client := oslapi.Client{}
 	notice, err := client.GetHeader(license)
 	if err != nil {
 		return LICENSE_NOTICE_TEMPLATE
@@ -200,9 +200,9 @@ func getNotice(license string) string {
 }
 
 // replaceKeys replaces template keywords by an actual data.
-func replaceKeys(template string, license golang.License, cfg Config, cStart, cEnd string) string {
+func replaceKeys(template string, license oslapi.License, cfg Config, cStart, cEnd string) string {
 	// Set license name
-	retStr := strings.Replace(template, "<license name>", license.Name(), -1)
+	retStr := strings.Replace(template, "<license name>", license.Title(), -1)
 
 	// Set license link
 	retStr = strings.Replace(retStr, "<license link>", license.Link(), -1)

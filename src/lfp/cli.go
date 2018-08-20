@@ -9,7 +9,7 @@ import (
 	"fmt"
 	"time"
 	"io/ioutil"
-	"github.com/YuriyLisovskiy/licenses/api/golang"
+	"github.com/YuriyLisovskiy/licenses/api/go"
 )
 
 func RunCLI() error {
@@ -96,7 +96,7 @@ func processLicensing() error {
 }
 
 func processLicenseHelp() error {
-	client := golang.Client{}
+	client := oslapi.Client{}
 	list, err := client.GetList()
 	if err != nil {
 		return err
