@@ -158,12 +158,12 @@ func prepareLicenseNotice(cfg Config, ext string) ([]byte, error) {
 				template += "\n"
 			}
 		}
+		start := noticeTemplate[:loc[0]]
+		if start == "\n" {
+			start = ""
+		}
+		template = start + template + noticeTemplate[loc[1]:]
 	}
-	start := noticeTemplate[:loc[0]]
-	if start == "\n" {
-		start = ""
-	}
-	template = start + template + noticeTemplate[loc[1]:]
 	commentStart, commentEnd, err := getComments(ext)
 	if err != nil {
 		return []byte{}, err
